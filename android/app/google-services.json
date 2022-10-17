@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "297782769824",
+    "project_id": "orderaholic-f387d",
+    "storage_bucket": "orderaholic-f387d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297782769824:android:5c34947d073533343471c5",
+        "android_client_info": {
+          "package_name": "com.example.mufyp_orderaholic_2c_client"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "297782769824-eqoadlqd8qr6o9itmvhg9carei5pu21i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4BRYqcw6rpf5Alr_60Wc9ea_mAX6EDic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "297782769824-eqoadlqd8qr6o9itmvhg9carei5pu21i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "297782769824-43bv0h1havfosmj7ir2ee2vl6keqsq2o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mufypOrderaholic2cClient"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

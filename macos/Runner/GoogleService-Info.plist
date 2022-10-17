@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>297782769824-43bv0h1havfosmj7ir2ee2vl6keqsq2o.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.297782769824-43bv0h1havfosmj7ir2ee2vl6keqsq2o</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBGrS1SwpNOwSbWYn9XNDfJCDaJW11TemI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>297782769824</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.mufypOrderaholic2cClient</string>
+	<key>PROJECT_ID</key>
+	<string>orderaholic-f387d</string>
+	<key>STORAGE_BUCKET</key>
+	<string>orderaholic-f387d.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:297782769824:ios:f95f74b3a6e5238b3471c5</string>
+</dict>
+</plist>
