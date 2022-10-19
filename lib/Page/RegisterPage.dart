@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../Config//Theme.dart';
 
@@ -13,6 +14,12 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    TextEditingController _emailController = TextEditingController();
+    TextEditingController _passwordController = TextEditingController();
+
+    void _register() async {
+      log("Register");
+    }
 
     return SingleChildScrollView(
       child: Container(
@@ -38,7 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             Padding(
               padding: EdgeInsets.only(
-                  left: size.width * 0.05, right: size.width * 0.05, top: 10),
+                  left: size.width * 0.1, right: size.width * 0.1, top: 10),
               child: Container(
                 height: size.height * 0.65,
                 decoration: BoxDecoration(
@@ -50,7 +57,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
                   child: Column(
                     children: [
+                      SizedBox(height: size.height * 0.05),
                       TextField(
+                        controller: _emailController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: "Email",
@@ -61,6 +70,49 @@ class _RegisterPageState extends State<RegisterPage> {
                             borderSide: BorderSide(
                               color: PrimaryColor,
                             ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "Password",
+                          hintStyle: TextStyle(
+                            color: Colors.white,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: PrimaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "Confirm Password",
+                          hintStyle: TextStyle(
+                            color: Colors.white,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: PrimaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: _register,
+                        child: const Text("Register"),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: PrimaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
                           ),
                         ),
                       ),
