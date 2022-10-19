@@ -1,7 +1,7 @@
 import 'dart:developer';
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import '../Config//Theme.dart';
+import '../Config/Theme.dart';
+import './LoginPage.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -19,6 +19,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
     void _register() async {
       log("Register");
+    }
+
+    void _returnTologin() async {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => LoginPage()));
     }
 
     return SingleChildScrollView(
@@ -105,11 +110,25 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 25),
                       ElevatedButton(
                         onPressed: _register,
                         child: const Text("Register"),
                         style: ElevatedButton.styleFrom(
+                          minimumSize: Size(size.width * 0.5, 40),
+                          backgroundColor: PrimaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: _returnTologin,
+                        child: const Text("Go To Login"),
+                        style: ElevatedButton.styleFrom(
+                          //width fix to padding
+                          minimumSize: Size(size.width * 0.5, 40),
                           backgroundColor: PrimaryColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
