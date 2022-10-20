@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import '../Config/Theme.dart';
 import './LoginPage.dart';
+import '../Function/FirebaseAuth.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -16,9 +17,82 @@ class _RegisterPageState extends State<RegisterPage> {
     Size size = MediaQuery.of(context).size;
     TextEditingController _emailController = TextEditingController();
     TextEditingController _passwordController = TextEditingController();
+    TextEditingController _confirmPasswordController = TextEditingController();
 
     void _register() async {
-      log(_emailController.text);
+      if (_passwordController.text == _confirmPasswordController.text) {
+        var result = await RegisterWithEmail(
+            _emailController.text, _passwordController.text);
+        switch (result) {
+          case "Success":
+            //TODO
+            break;
+          case "Failed":
+            showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                      title: Text("Register Failed"),
+                      content: Text("Unknow error, please try again later"),
+                      actions: [
+                        TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text("OK"))
+                      ],
+                    ));
+            break;
+          case "weak-password":
+            showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                      title: Text("Register Failed"),
+                      content: Text("Password is too weak"),
+                      actions: [
+                        TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text("OK"))
+                      ],
+                    ));
+            break;
+          case "email-already-in-use":
+            showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                      title: Text("Register Failed"),
+                      content: Text("Email already in use"),
+                      actions: [
+                        TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text("OK"))
+                      ],
+                    ));
+            break;
+          default:
+            showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                      title: Text("Register Failed"),
+                      content: Text("Unknow error, please try again later"),
+                      actions: [
+                        TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text("OK"))
+                      ],
+                    ));
+        }
+      } else {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text("Error"),
+                  content:
+                      Text("Password and Confirm Password are not the same"),
+                  actions: [
+                    TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text("OK"))
+                  ],
+                ));
+      }
     }
 
     void _returnTologin() async {
@@ -95,6 +169,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(height: 10),
                       TextField(
                         controller: _passwordController,
+                        obscureText: true,
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                           labelText: "Password",
@@ -115,7 +190,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       SizedBox(height: 10),
                       TextField(
-                        controller: _passwordController,
+                        controller: _confirmPasswordController,
+                        obscureText: true,
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                           labelText: "Confirm Password",
