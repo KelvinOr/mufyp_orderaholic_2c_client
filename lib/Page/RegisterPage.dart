@@ -62,16 +62,29 @@ class _RegisterPageState extends State<RegisterPage> {
                       EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
                   child: Column(
                     children: [
-                      SizedBox(height: size.height * 0.05),
+                      Text(
+                        "Register",
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Verdana",
+                          color: PrimaryColor,
+                        ),
+                      ),
+                      SizedBox(height: size.height * 0.03),
                       TextField(
                         controller: _emailController,
                         decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: "Email",
-                          hintStyle: TextStyle(
-                            color: Colors.white,
+                          labelText: "Email",
+                          labelStyle: TextStyle(
+                            color: PrimaryColor,
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: PrimaryColor,
+                            ),
+                          ),
+                          enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: PrimaryColor,
                             ),
@@ -82,12 +95,16 @@ class _RegisterPageState extends State<RegisterPage> {
                       TextField(
                         controller: _passwordController,
                         decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: "Password",
-                          hintStyle: TextStyle(
-                            color: Colors.white,
+                          labelText: "Password",
+                          labelStyle: TextStyle(
+                            color: PrimaryColor,
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: PrimaryColor,
+                            ),
+                          ),
+                          enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: PrimaryColor,
                             ),
@@ -98,12 +115,16 @@ class _RegisterPageState extends State<RegisterPage> {
                       TextField(
                         controller: _passwordController,
                         decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: "Confirm Password",
-                          hintStyle: TextStyle(
-                            color: Colors.white,
+                          labelText: "Confirm Password",
+                          labelStyle: TextStyle(
+                            color: PrimaryColor,
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: PrimaryColor,
+                            ),
+                          ),
+                          enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: PrimaryColor,
                             ),
@@ -115,7 +136,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         onPressed: _register,
                         child: const Text("Register"),
                         style: ElevatedButton.styleFrom(
-                          minimumSize: Size(size.width * 0.5, 40),
+                          minimumSize:
+                              Size(size.width * 0.5, size.height * 0.04),
                           backgroundColor: PrimaryColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -128,7 +150,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: const Text("Go To Login"),
                         style: ElevatedButton.styleFrom(
                           //width fix to padding
-                          minimumSize: Size(size.width * 0.5, 40),
+                          minimumSize:
+                              Size(size.width * 0.5, size.height * 0.04),
                           backgroundColor: PrimaryColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
