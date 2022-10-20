@@ -96,8 +96,8 @@ class _RegisterPageState extends State<RegisterPage> {
     }
 
     void _returnTologin() async {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LoginPage()));
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const LoginPage()));
     }
 
     return Scaffold(
