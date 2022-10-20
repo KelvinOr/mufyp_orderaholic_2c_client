@@ -18,7 +18,7 @@ class _RegisterPageState extends State<RegisterPage> {
     TextEditingController _passwordController = TextEditingController();
 
     void _register() async {
-      log("Register");
+      log(_emailController.text);
     }
 
     void _returnTologin() async {
@@ -74,6 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(height: size.height * 0.03),
                       TextField(
                         controller: _emailController,
+                        style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                           labelText: "Email",
                           labelStyle: TextStyle(
@@ -94,6 +95,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(height: 10),
                       TextField(
                         controller: _passwordController,
+                        style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                           labelText: "Password",
                           labelStyle: TextStyle(
@@ -114,6 +116,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(height: 10),
                       TextField(
                         controller: _passwordController,
+                        style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                           labelText: "Confirm Password",
                           labelStyle: TextStyle(
