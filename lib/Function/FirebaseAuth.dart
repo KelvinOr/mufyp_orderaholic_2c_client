@@ -28,3 +28,16 @@ Future<String> RegisterWithEmail(String email, String password) async {
   }
   return "Failed";
 }
+
+Future<bool> CheckLoginState() async {
+  User? user = await auth.currentUser;
+  if (user != null) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+Future<void> Logout() async {
+  await auth.signOut();
+}

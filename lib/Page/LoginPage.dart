@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Config/Theme.dart';
+import '../Function/FirebaseAuth.dart';
+import '../Page/MainPage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -16,9 +18,26 @@ class _LoginPageState extends State<LoginPage> {
     TextEditingController _emailController = TextEditingController();
     TextEditingController _passwordController = TextEditingController();
 
-    void _login() async {}
+    void _login() async {
+      String result =
+          await LoginWithEmail(_emailController.text, _passwordController.text);
+      if (result == "Success") {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MainPage(),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(result),
+          ),
+        );
+      }
+    }
 
-    return new Scaffold(
+    return Scaffold(
       body: SingleChildScrollView(
         child: Container(
           width: size.width,
@@ -110,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(height: 25),
                         ElevatedButton(
                           onPressed: _login,
-                          child: const Text("Register"),
+                          child: const Text("Login"),
                           style: ElevatedButton.styleFrom(
                             minimumSize:
                                 Size(size.width * 0.5, size.height * 0.04),
