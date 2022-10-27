@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mufyp_orderaholic_2c_client/Page/RegisterPage.dart';
 import '../Config/Theme.dart';
 import '../Function/FirebaseAuth.dart';
 import '../Page/MainPage.dart';
@@ -35,6 +36,11 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
       }
+    }
+
+    void _returnToRegister() {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const RegisterPage()));
     }
 
     return Scaffold(
@@ -131,6 +137,20 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: _login,
                           child: const Text("Login"),
                           style: ElevatedButton.styleFrom(
+                            minimumSize:
+                                Size(size.width * 0.5, size.height * 0.04),
+                            backgroundColor: PrimaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: _returnToRegister,
+                          child: const Text("Go To Login"),
+                          style: ElevatedButton.styleFrom(
+                            //width fix to padding
                             minimumSize:
                                 Size(size.width * 0.5, size.height * 0.04),
                             backgroundColor: PrimaryColor,
