@@ -20,7 +20,18 @@ class _MainPageState extends State<MainPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(user != null ? user.email.toString() : ""),
+          Text(
+            user != null ? user.email.toString() : "",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          Text(
+            user != null ? user.uid.toString() : "",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(200, 50),

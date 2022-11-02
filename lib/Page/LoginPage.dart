@@ -148,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(height: 10),
                         ElevatedButton(
                           onPressed: _returnToRegister,
-                          child: const Text("Go To Login"),
+                          child: const Text("Go To Register"),
                           style: ElevatedButton.styleFrom(
                             //width fix to padding
                             minimumSize:
