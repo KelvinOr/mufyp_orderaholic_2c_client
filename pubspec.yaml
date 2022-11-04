@@ -30,7 +30,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
-    sdk: flutter
+    sdk: flutter #BSD
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^1.24.0
   firebase_auth: ^3.11.2
+  mobile_scanner: ^2.0.0 #BSD
 
 dev_dependencies:
   flutter_test:
