@@ -19,7 +19,12 @@ class _OrderPageState extends State<OrderPage> {
       ),
       body: Column(
         children: [
-          Text(widget.code),
+          Text(
+            widget.code,
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
         ],
       ),
     );
