@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mufyp_orderaholic_2c_client/Model/OrderIDModel.dart';
 import 'dart:convert';
 import 'package:mufyp_orderaholic_2c_client/Function/FireStoreHelper.dart';
@@ -15,30 +14,34 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
+  var _restaurnatInfo = "";
+
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    getRestInfo();
+  }
+
+  void getRestInfo() async {
     Map<String, dynamic> jsondecode = jsonDecode(widget.code.toString());
     OrderIDModel orderID = OrderIDModel(
       jsondecode['RestaurantID'].toString(),
       jsondecode['OrderID'].toString(),
     );
 
-    void btn_test_onClick() async {
-      var result = await getRestaurants(orderID.RestaurantID.toString());
-      print(result);
-    }
+    _restaurnatInfo = await getRestaurants(orderID.RestaurantID.toString());
+    print(_restaurnatInfo);
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.code),
-      ),
+      appBar: AppBar(),
       body: Column(
         children: [
+          Text(_restaurnatInfo),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size(200, 50),
-            ),
-            onPressed: btn_test_onClick,
+            onPressed: () {},
             child: const Text("test"),
           ),
         ],
