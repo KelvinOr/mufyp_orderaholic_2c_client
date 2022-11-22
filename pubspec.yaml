@@ -39,6 +39,7 @@ dependencies:
   firebase_core: ^1.24.0
   firebase_auth: ^3.11.2
   mobile_scanner: ^2.0.0 #BSD
+  cloud_firestore: ^3.5.1
 
 dev_dependencies:
   flutter_test:
