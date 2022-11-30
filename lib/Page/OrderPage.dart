@@ -39,7 +39,8 @@ class _OrderPageState extends State<OrderPage> {
       appBar: AppBar(),
       body: Column(
         children: [
-          Text(_restaurnatInfo),
+          //get code
+          Text(widget.code.toString(), style: TextStyle(color: Colors.white)),
           ElevatedButton(
             onPressed: () {},
             child: const Text("test"),
