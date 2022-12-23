@@ -14,7 +14,7 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
-  var _restaurnatInfo = "";
+  var _restaurnatMenu = "";
 
   @override
   void initState() {
@@ -29,8 +29,31 @@ class _OrderPageState extends State<OrderPage> {
       jsondecode['OrderID'].toString(),
     );
 
-    _restaurnatInfo = await getRestaurants(orderID.RestaurantID.toString());
-    print(_restaurnatInfo);
+    var _restaurnatInfo = await getRestaurants(orderID.RestaurantID.toString());
+    if (_restaurnatInfo.toString() != "null") {
+      Map<String, dynamic> testjsoncode =
+          jsonDecode(_restaurnatInfo.toString());
+      _restaurnatMenu = testjsoncode['menu'].toString();
+
+      if (_restaurnatInfo.toString() != "null") {
+        var CurrentTime = DateTime.now().hour.toString();
+        CurrentTime = "8";
+        if (int.parse(CurrentTime) >= 7 && int.parse(CurrentTime) < 11) {
+          _restaurnatMenu = testjsoncode['menu']['breakfast'].toString();
+          print("testetsts " + testjsoncode.toString());
+        }
+        if (int.parse(CurrentTime) >= 11 && int.parse(CurrentTime) < 17) {
+          _restaurnatMenu = testjsoncode['menu']['lunch'].toString();
+        }
+        if (int.parse(CurrentTime) >= 17 && int.parse(CurrentTime) < 23) {
+          _restaurnatMenu = testjsoncode['menu']['dinner'].toString();
+        }
+        if (int.parse(CurrentTime) >= 23 && int.parse(CurrentTime) < 7) {
+          _restaurnatMenu = "restaurant is closed";
+        }
+        setState(() {});
+      }
+    }
   }
 
   @override
@@ -39,8 +62,12 @@ class _OrderPageState extends State<OrderPage> {
       appBar: AppBar(),
       body: Column(
         children: [
+<<<<<<< HEAD
           //get code
           Text(widget.code.toString(), style: TextStyle(color: Colors.white)),
+=======
+          Text(_restaurnatMenu),
+>>>>>>> 31b024f (finish get menu)
           ElevatedButton(
             onPressed: () {},
             child: const Text("test"),

@@ -16,12 +16,13 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    TextEditingController _emailController = TextEditingController();
-    TextEditingController _passwordController = TextEditingController();
+    final _emailController = TextEditingController();
+    final _passwordController = TextEditingController();
 
     void _login() async {
       String result =
           await LoginWithEmail(_emailController.text, _passwordController.text);
+      print("Debug " + _emailController.text + _passwordController.text);
       if (result == "Success") {
         Navigator.pushReplacement(
           context,
@@ -91,7 +92,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: size.height * 0.03),
                         TextField(
-                          controller: _emailController,
                           style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                             labelText: "Email",
@@ -109,10 +109,10 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                           ),
+                          controller: _emailController,
                         ),
                         SizedBox(height: 10),
                         TextField(
-                          controller: _passwordController,
                           obscureText: true,
                           style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
@@ -131,6 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                           ),
+                          controller: _passwordController,
                         ),
                         SizedBox(height: 25),
                         ElevatedButton(

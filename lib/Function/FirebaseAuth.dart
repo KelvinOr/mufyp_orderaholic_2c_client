@@ -3,10 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 FirebaseAuth auth = FirebaseAuth.instance;
 
 Future<String> LoginWithEmail(String email, String password) async {
+  print(password);
   try {
     await auth.signInWithEmailAndPassword(email: email, password: password);
     return "Success";
   } on FirebaseAuthException catch (e) {
+    print("error code: " + e.code);
     return e.code;
   }
 }

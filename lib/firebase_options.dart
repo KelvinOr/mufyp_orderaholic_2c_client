@@ -49,6 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '297782769824',
     projectId: 'orderaholic-f387d',
     authDomain: 'orderaholic-f387d.firebaseapp.com',
+    databaseURL: 'https://orderaholic-f387d-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'orderaholic-f387d.appspot.com',
     measurementId: 'G-MYH5X4MXR8',
   );
@@ -58,6 +59,7 @@ class DefaultFirebaseOptions {
     appId: '1:297782769824:android:5c34947d073533343471c5',
     messagingSenderId: '297782769824',
     projectId: 'orderaholic-f387d',
+    databaseURL: 'https://orderaholic-f387d-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'orderaholic-f387d.appspot.com',
   );
 
@@ -66,6 +68,7 @@ class DefaultFirebaseOptions {
     appId: '1:297782769824:ios:f95f74b3a6e5238b3471c5',
     messagingSenderId: '297782769824',
     projectId: 'orderaholic-f387d',
+    databaseURL: 'https://orderaholic-f387d-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'orderaholic-f387d.appspot.com',
     iosClientId: '297782769824-43bv0h1havfosmj7ir2ee2vl6keqsq2o.apps.googleusercontent.com',
     iosBundleId: 'com.example.mufypOrderaholic2cClient',
@@ -76,6 +79,7 @@ class DefaultFirebaseOptions {
     appId: '1:297782769824:ios:f95f74b3a6e5238b3471c5',
     messagingSenderId: '297782769824',
     projectId: 'orderaholic-f387d',
+    databaseURL: 'https://orderaholic-f387d-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'orderaholic-f387d.appspot.com',
     iosClientId: '297782769824-43bv0h1havfosmj7ir2ee2vl6keqsq2o.apps.googleusercontent.com',
     iosBundleId: 'com.example.mufypOrderaholic2cClient',

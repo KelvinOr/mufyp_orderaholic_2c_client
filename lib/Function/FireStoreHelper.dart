@@ -8,6 +8,7 @@ Future<String> getRestaurants(String restaurantID) async {
 
   var result = await docRef.get().then((doc) {
     if (doc.exists) {
+      print(doc.data());
       return jsonEncode(doc.data());
     } else {
       return "null";
