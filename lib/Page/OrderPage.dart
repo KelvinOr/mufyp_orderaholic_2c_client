@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mufyp_orderaholic_2c_client/Model/OrderIDModel.dart';
 import 'dart:convert';
 import 'package:mufyp_orderaholic_2c_client/Function/FireStoreHelper.dart';
+import 'package:mufyp_orderaholic_2c_client/Page/ComfirmOrderPage.dart';
+import '../Model/MenuItemModel.dart';
+import '../Config/Theme.dart';
 
 class OrderPage extends StatefulWidget {
   //const OrderPage({Key? key}) : super(key: key);
@@ -14,7 +17,9 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
-  var _restaurnatMenu = "";
+  List<MenuItemModel> _restaurnatMenu = [];
+  List<MenuItemModel> _orderItem = [];
+  String _resturantName = "";
 
   @override
   void initState() {
@@ -31,26 +36,27 @@ class _OrderPageState extends State<OrderPage> {
 
     var _restaurnatInfo = await getRestaurants(orderID.RestaurantID.toString());
     if (_restaurnatInfo.toString() != "null") {
+      _resturantName =
+          jsonDecode(_restaurnatInfo.toString())["Name"].toString();
+
       Map<String, dynamic> testjsoncode =
           jsonDecode(_restaurnatInfo.toString());
-      _restaurnatMenu = testjsoncode['menu'].toString();
 
       if (_restaurnatInfo.toString() != "null") {
         var CurrentTime = DateTime.now().hour.toString();
         CurrentTime = "8";
         if (int.parse(CurrentTime) >= 7 && int.parse(CurrentTime) < 11) {
-          _restaurnatMenu = testjsoncode['menu']['breakfast'].toString();
-          print("testetsts " + testjsoncode.toString());
+          for (var items in testjsoncode['menu']['breakfast']) {
+            _restaurnatMenu.add(MenuItemModel(items['name'], items['price']));
+          }
         }
         if (int.parse(CurrentTime) >= 11 && int.parse(CurrentTime) < 17) {
-          _restaurnatMenu = testjsoncode['menu']['lunch'].toString();
+          _restaurnatMenu = testjsoncode['menu']['lunch'];
         }
         if (int.parse(CurrentTime) >= 17 && int.parse(CurrentTime) < 23) {
-          _restaurnatMenu = testjsoncode['menu']['dinner'].toString();
+          _restaurnatMenu = testjsoncode['menu']['dinner'];
         }
-        if (int.parse(CurrentTime) >= 23 && int.parse(CurrentTime) < 7) {
-          _restaurnatMenu = "restaurant is closed";
-        }
+        if (int.parse(CurrentTime) >= 23 && int.parse(CurrentTime) < 7) {}
         setState(() {});
       }
     }
@@ -58,16 +64,84 @@ class _OrderPageState extends State<OrderPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(),
-      body: Column(
-        children: [
-          Text(_restaurnatMenu),
-          ElevatedButton(
-            onPressed: () {},
-            child: const Text("test"),
-          ),
-        ],
+      appBar: AppBar(
+        title: Text(_resturantName),
+        backgroundColor: PrimaryColor,
+      ),
+      body: Padding(
+        padding: EdgeInsets.only(
+            left: size.width * 0.05, right: size.width * 0.05, top: 10),
+        child: Column(
+          children: [
+            ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: _restaurnatMenu.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  elevation: 6,
+                  margin: const EdgeInsets.all(5),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  color: SecondaryColor,
+                  child: ListTile(
+                    title: Text(
+                      _restaurnatMenu[index].name,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      _restaurnatMenu[index].price,
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    trailing: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _orderItem.add(_restaurnatMenu[index]);
+                        });
+                      },
+                      icon: Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+            SizedBox(
+              height: size.height * 0.01,
+            ),
+            ElevatedButton(
+              child: Text("Have " + _orderItem.length.toString() + " item"),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(size.width * 0.87, size.height * 0.05),
+                backgroundColor: SecondaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ComfirmOrderPage(
+                      OrderList: _orderItem,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
