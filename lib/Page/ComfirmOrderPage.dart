@@ -65,6 +65,16 @@ class _ComfirmOrderPageState extends State<ComfirmOrderPage> {
                         color: Colors.grey,
                       ),
                     ),
+                    trailing: IconButton(
+                      onPressed: () {
+                        widget.OrderList.removeAt(index);
+                        setState(() {});
+                      },
+                      icon: Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 );
               },
