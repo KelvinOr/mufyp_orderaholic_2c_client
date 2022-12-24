@@ -65,6 +65,7 @@ class _OrderPageState extends State<OrderPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(_resturantName),
@@ -130,11 +131,19 @@ class _OrderPageState extends State<OrderPage> {
                 ),
               ),
               onPressed: () {
+                Map<String, dynamic> jsondecode =
+                    jsonDecode(widget.code.toString());
+                OrderIDModel orderID = OrderIDModel(
+                  jsondecode['RestaurantID'].toString(),
+                  jsondecode['OrderID'].toString(),
+                );
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ComfirmOrderPage(
                       OrderList: _orderItem,
+                      orderID: orderID.OrderID,
+                      restaurantID: orderID.RestaurantID,
                     ),
                   ),
                 );
