@@ -23,7 +23,7 @@ Future<String> getRestaurants(String restaurantID) async {
 Future<void> sendOrder(
     List<MenuItemModel> orderItem, String orderID, String restaurantID) async {
   DatabaseReference dbRef =
-      FirebaseDatabase.instance.ref(restaurantID + "/" + orderID);
+      FirebaseDatabase.instance.ref("orders/" + restaurantID + "/" + orderID);
 
   var orderItemArray = [];
   List<OrderItemFullModel> allItems = []..addAll(orderItem
@@ -43,11 +43,12 @@ Future<void> sendOrder(
   if (oldOrderStatus.exists) {
     Map<String, dynamic> tempMap =
         Map<String, dynamic>.from(oldOrderStatus.value as Map);
-    oldItemsArray = tempMap["Item"];
-  }
-
-  for (var item in oldItemsArray) {
-    orderItemArray.add(item);
+    if (tempMap["Item"] != null) {
+      oldItemsArray = tempMap["Item"];
+      for (var item in oldItemsArray) {
+        orderItemArray.add(item);
+      }
+    }
   }
 
   dbRef.update({
@@ -61,7 +62,11 @@ Future<dynamic> getOrderInfo(String restaurantID, String orderID) {
 
   var result = dbRefgetOrderInf.get().then((value) {
     if (value.exists) {
-      print(value.value);
+      Map<String, dynamic> tempMap =
+          Map<String, dynamic>.from(value.value as Map);
+      if (tempMap["Item"] != null) {
+        return null;
+      }
       return value.value;
     } else {
       return null;
