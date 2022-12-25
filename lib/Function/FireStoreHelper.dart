@@ -64,7 +64,7 @@ Future<dynamic> getOrderInfo(String restaurantID, String orderID) {
     if (value.exists) {
       Map<String, dynamic> tempMap =
           Map<String, dynamic>.from(value.value as Map);
-      if (tempMap["Item"] != null) {
+      if (tempMap["Item"] == null) {
         return null;
       }
       return value.value;

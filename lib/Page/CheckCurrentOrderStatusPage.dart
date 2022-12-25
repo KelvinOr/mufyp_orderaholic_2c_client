@@ -16,6 +16,7 @@ class CheckCurrentOrderStatusOage extends StatefulWidget {
 
 class _CheckCurrentOrderStatusOage extends State<CheckCurrentOrderStatusOage> {
   var item = [];
+  var checkIsNull = false;
 
   @override
   void initState() {
@@ -35,7 +36,8 @@ class _CheckCurrentOrderStatusOage extends State<CheckCurrentOrderStatusOage> {
       item = _orderInfo["Item"];
       setState(() {});
     } else {
-      // no order
+      checkIsNull = true;
+      setState(() {});
     }
   }
 
@@ -56,8 +58,9 @@ class _CheckCurrentOrderStatusOage extends State<CheckCurrentOrderStatusOage> {
             child: Padding(
               padding: EdgeInsets.only(
                   left: size.width * 0.05, right: size.width * 0.05, top: 10),
-              child: Column(children: [
-                ListView.builder(
+              child: Column(
+                children: [
+                  ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemCount: item.length,
@@ -93,8 +96,36 @@ class _CheckCurrentOrderStatusOage extends State<CheckCurrentOrderStatusOage> {
                           ),
                         ),
                       );
+                    },
+                  ),
+                  checkIsNull
+                      ? Text(
+                          "Order not found",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      : Container(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: (() {
+                      Navigator.pop(context);
                     }),
-              ]),
+                    child: Text("Back"),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: SecondaryColor,
+                      minimumSize: Size(size.width * 0.87, 47),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
