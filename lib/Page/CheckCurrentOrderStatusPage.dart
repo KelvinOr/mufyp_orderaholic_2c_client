@@ -48,49 +48,55 @@ class _CheckCurrentOrderStatusOage extends State<CheckCurrentOrderStatusOage> {
         title: Text("Order status"),
         backgroundColor: PrimaryColor,
       ),
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.only(
-              left: size.width * 0.05, right: size.width * 0.05, top: 10),
-          child: Column(children: [
-            ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: item.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    elevation: 6,
-                    margin: const EdgeInsets.all(5),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    color: SecondaryColor,
-                    child: ListTile(
-                      title: Text(
-                        item[index]["name"],
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Container(
+          width: size.width,
+          height: size.height,
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.only(
+                  left: size.width * 0.05, right: size.width * 0.05, top: 10),
+              child: Column(children: [
+                ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: item.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        elevation: 6,
+                        margin: const EdgeInsets.all(5),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                      ),
-                      subtitle: Text(
-                        "Price: " +
-                            item[index]["price"].toString() +
-                            "\nStatus: " +
-                            item[index]["state"].toString() +
-                            "\nCreate Time: " +
-                            item[index]["time"],
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
+                        color: SecondaryColor,
+                        child: ListTile(
+                          title: Text(
+                            item[index]["name"],
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "Price: " +
+                                item[index]["price"].toString() +
+                                "\nStatus: " +
+                                item[index]["state"].toString() +
+                                "\nCreate Time: " +
+                                item[index]["time"],
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  );
-                }),
-          ]),
+                      );
+                    }),
+              ]),
+            ),
+          ),
         ),
       ),
     );
