@@ -57,7 +57,7 @@ Future<void> sendOrder(
 
 Future<dynamic> getOrderInfo(String restaurantID, String orderID) {
   DatabaseReference dbRefgetOrderInf =
-      FirebaseDatabase.instance.ref(restaurantID + "/" + orderID);
+      FirebaseDatabase.instance.ref("orders/" + restaurantID + "/" + orderID);
 
   var result = dbRefgetOrderInf.get().then((value) {
     if (value.exists) {
