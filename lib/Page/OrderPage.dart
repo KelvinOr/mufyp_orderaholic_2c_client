@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mufyp_orderaholic_2c_client/Model/OrderIDModel.dart';
 import 'dart:convert';
 import 'package:mufyp_orderaholic_2c_client/Function/FireStoreHelper.dart';
+import 'package:mufyp_orderaholic_2c_client/Page/CheckCurrentOrderStatusPage.dart';
 import 'package:mufyp_orderaholic_2c_client/Page/ComfirmOrderPage.dart';
 import '../Model/MenuItemModel.dart';
 import '../Config/Theme.dart';
@@ -145,6 +146,25 @@ class _OrderPageState extends State<OrderPage> {
                       orderID: orderID.OrderID,
                       restaurantID: orderID.RestaurantID,
                     ),
+                  ),
+                );
+              },
+            ),
+            ElevatedButton(
+              child: Text("Check current order status"),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(size.width * 0.87, size.height * 0.05),
+                backgroundColor: SecondaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        CheckCurrentOrderStatusOage(code: widget.code),
                   ),
                 );
               },
