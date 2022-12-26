@@ -150,6 +150,7 @@ class _OrderPageState extends State<OrderPage> {
                 );
               },
             ),
+            SizedBox(height: 5),
             ElevatedButton(
               child: Text("Check current order status"),
               style: ElevatedButton.styleFrom(

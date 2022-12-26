@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mufyp_orderaholic_2c_client/Page/CheckLogin.dart';
 import 'package:mufyp_orderaholic_2c_client/Page/RegisterPage.dart';
 import '../Config/Theme.dart';
 import '../Function/FirebaseAuth.dart';
-import '../Page/MainPage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const MainPage(),
+            builder: (context) => CheckLogin(),
           ),
         );
       } else {

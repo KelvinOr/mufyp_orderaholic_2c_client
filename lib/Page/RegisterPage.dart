@@ -25,7 +25,12 @@ class _RegisterPageState extends State<RegisterPage> {
             _emailController.text, _passwordController.text);
         switch (result) {
           case "Success":
-            //TODO
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => LoginPage(),
+              ),
+            );
             break;
           case "Failed":
             showDialog(

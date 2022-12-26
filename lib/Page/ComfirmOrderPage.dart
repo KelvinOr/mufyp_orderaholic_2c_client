@@ -33,13 +33,14 @@ class _ComfirmOrderPageState extends State<ComfirmOrderPage> {
         title: const Text("Comfirm Order"),
         backgroundColor: PrimaryColor,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: EdgeInsets.only(
             left: size.width * 0.05, right: size.width * 0.05, top: 10),
+        physics: ScrollPhysics(),
         child: Column(
           children: [
             ListView.builder(
-              scrollDirection: Axis.vertical,
+              physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: widget.OrderList.length,
               itemBuilder: (context, index) {
@@ -93,6 +94,7 @@ class _ComfirmOrderPageState extends State<ComfirmOrderPage> {
                 ),
               ),
             ),
+            SizedBox(height: size.height * 0.01),
           ],
         ),
       ),
