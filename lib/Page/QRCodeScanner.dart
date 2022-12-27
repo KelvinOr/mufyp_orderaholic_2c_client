@@ -1,4 +1,7 @@
 import 'dart:developer';
+import 'dart:ui';
+import 'package:mufyp_orderaholic_2c_client/Config/Theme.dart';
+
 import 'OrderPage.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:flutter/material.dart';
@@ -23,48 +26,56 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
   Widget build(BuildContext context) {
     String _result = "";
 
+    Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("result"),
+        title: const Text("QR code Scanner"),
+        backgroundColor: PrimaryColor,
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            MobileScanner(
-              allowDuplicates: true,
-              controller: MobileScannerController(),
-              onDetect: (barcode, args) {
-                if (barcode.rawValue == null) {
-                  log('Failed to scan Barcode');
-                } else {
-                  final String code = barcode.rawValue!;
+        child: SafeArea(
+          child: Column(
+            children: [
+              SizedBox(
+                height: size.height * 0.9,
+                child: MobileScanner(
+                  allowDuplicates: true,
+                  controller: MobileScannerController(),
+                  onDetect: (barcode, args) {
+                    if (barcode.rawValue == null) {
+                      log('Failed to scan Barcode');
+                    } else {
+                      final String code = barcode.rawValue!;
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          //send data to new page
+                          builder: (context) => OrderPage(
+                            code: code,
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       //send data to new page
                       builder: (context) => OrderPage(
-                        code: code,
+                        code: jsonEncode(testOrder),
                       ),
                     ),
                   );
-                }
-              },
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    //send data to new page
-                    builder: (context) => OrderPage(
-                      code: jsonEncode(testOrder),
-                    ),
-                  ),
-                );
-              },
-              child: const Text("Test"),
-            ),
-          ],
+                },
+                child: const Text("Test"),
+              ),
+            ],
+          ),
         ),
       ),
     );

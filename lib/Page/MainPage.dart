@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mufyp_orderaholic_2c_client/Config/Theme.dart';
 import 'package:mufyp_orderaholic_2c_client/Page/LoginPage.dart';
 import '../Function/FirebaseAuth.dart';
 import 'package:mufyp_orderaholic_2c_client/Page/QRCodeScanner.dart';
@@ -14,56 +15,67 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     var user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            user != null ? user.email.toString() : "",
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          Text(
-            user != null ? user.uid.toString() : "",
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size(200, 50),
-            ),
-            onPressed: () {
-              Logout();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginPage(),
+      body: Padding(
+        padding: EdgeInsets.only(
+          left: size.width * 0.1,
+          right: size.width * 0.1,
+          top: size.height * 0.05,
+        ),
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //Main Item
+              Expanded(
+                child: Container(
+                  width: size.width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Recommend Restaurant",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        "Current Order",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              );
-            },
-            child: const Text("Logout"),
-          ),
-          SizedBox(height: 25),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size(200, 50),
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const QRCodeScanner(),
+              ),
+              //Bottom Item
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(size.width * 0.8, 40),
+                  backgroundColor: SecondaryColor,
                 ),
-              );
-            },
-            child: const Text("Scan QR Code"),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const QRCodeScanner(),
+                    ),
+                  );
+                },
+                child: const Text("Scan QR Code"),
+              ),
+              SizedBox(height: 20),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
