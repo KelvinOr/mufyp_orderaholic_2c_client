@@ -1,6 +1,9 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mufyp_orderaholic_2c_client/Model/MenuItemModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '../Model/OrderItemFullModel.dart';
 
@@ -70,6 +73,25 @@ Future<dynamic> getOrderInfo(String restaurantID, String orderID) {
       return value.value;
     } else {
       return null;
+    }
+  });
+  return result;
+}
+
+Future<bool> checkOrderIsFinish(String restaurantID, String orderID) async {
+  DatabaseReference dbRefgetOrderInf =
+      FirebaseDatabase.instance.ref("orders/" + restaurantID + "/" + orderID);
+
+  var result = dbRefgetOrderInf.get().then((value) {
+    if (value.exists) {
+      Map<String, dynamic> tempMap =
+          Map<String, dynamic>.from(value.value as Map);
+      if (tempMap["Item"] == null) {
+        return true;
+      }
+      return false;
+    } else {
+      return true;
     }
   });
   return result;
