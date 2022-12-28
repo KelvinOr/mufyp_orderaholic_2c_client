@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mufyp_orderaholic_2c_client/Config/Theme.dart';
 import 'package:mufyp_orderaholic_2c_client/Page/LoginPage.dart';
 import '../Function/FirebaseAuth.dart';
+import '../Function/RecommendSystem.dart';
 import 'package:mufyp_orderaholic_2c_client/Page/QRCodeScanner.dart';
 
 class MainPage extends StatefulWidget {
@@ -17,6 +18,17 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     var user = FirebaseAuth.instance.currentUser;
+
+    @override
+    void initState() {
+      if (user == null) {
+        Navigator.pop(context);
+      }
+
+      GetRecommendTable('Monday', 'breakfast').then((value) => print(value));
+
+      super.initState();
+    }
 
     return Scaffold(
       body: Padding(
@@ -55,6 +67,18 @@ class _MainPageState extends State<MainPage> {
                     ],
                   ),
                 ),
+              ),
+              //Test Button
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(size.width * 0.8, 40),
+                  backgroundColor: SecondaryColor,
+                ),
+                onPressed: () {
+                  SetRecommendTable(
+                      'Monday', 'breakfast', ['Western Restaurant']);
+                },
+                child: const Text("Test set table"),
               ),
               //Bottom Item
               ElevatedButton(
