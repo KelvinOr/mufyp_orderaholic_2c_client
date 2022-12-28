@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -16,6 +18,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   var user = FirebaseAuth.instance.currentUser;
+  var currentOrder = null;
 
   ScrollController _scrollController = new ScrollController();
   @override
@@ -32,6 +35,50 @@ class _MainPageState extends State<MainPage> {
       Navigator.pop(context);
     }
     GetRecommendTable('Monday', 'breakfast').then((value) => print(value));
+    checkCurrentOrder().then((value) {
+      if (value != null) {
+        currentOrder = jsonDecode(value);
+
+        setState(() {});
+      }
+    });
+  }
+
+  currentOrder_widget(Size size) {
+    if (currentOrder != null) {
+      print(size.width);
+      return Card(
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: size.width * 0.1,
+            right: size.width * 0.1,
+            top: 20,
+            bottom: 20,
+          ),
+          child: Text("Current Order: " + currentOrder.toString()),
+        ),
+      );
+    } else {
+      return Card(
+        color: SecondaryColor,
+        child: SizedBox(
+          height: size.height * 0.07,
+          width: size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "No Item in handling",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -77,6 +124,10 @@ class _MainPageState extends State<MainPage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        currentOrder_widget(size),
                       ],
                     ),
                   ),

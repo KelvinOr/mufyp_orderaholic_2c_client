@@ -16,9 +16,9 @@ Future<void> setCurrentOrder(String restaurantID, String orderID) async {
   }
 }
 
-Future<dynamic> checkCurrentOrder() {
-  final prefs = SharedPreferences.getInstance();
+Future<dynamic> checkCurrentOrder() async {
+  final prefs = await SharedPreferences.getInstance();
   final key = 'current_order';
-  final value = prefs.then((value) => value.getString(key));
+  final value = prefs.getString(key);
   return value;
 }
