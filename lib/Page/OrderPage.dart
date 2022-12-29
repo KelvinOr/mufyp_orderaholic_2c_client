@@ -62,6 +62,29 @@ class _OrderPageState extends State<OrderPage> {
     }
   }
 
+  void btn_addToComfirm_onClick(BuildContext context) async {
+    Map<String, dynamic> jsondecode = jsonDecode(widget.code.toString());
+    OrderIDModel orderID = OrderIDModel(
+      jsondecode['RestaurantID'].toString(),
+      jsondecode['OrderID'].toString(),
+    );
+
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ComfirmOrderPage(
+          OrderList: _orderItem,
+          orderID: orderID.OrderID,
+          restaurantID: orderID.RestaurantID,
+        ),
+      ),
+    );
+
+    if (result == true) {
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -130,24 +153,7 @@ class _OrderPageState extends State<OrderPage> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              onPressed: () {
-                Map<String, dynamic> jsondecode =
-                    jsonDecode(widget.code.toString());
-                OrderIDModel orderID = OrderIDModel(
-                  jsondecode['RestaurantID'].toString(),
-                  jsondecode['OrderID'].toString(),
-                );
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ComfirmOrderPage(
-                      OrderList: _orderItem,
-                      orderID: orderID.OrderID,
-                      restaurantID: orderID.RestaurantID,
-                    ),
-                  ),
-                );
-              },
+              onPressed: () => btn_addToComfirm_onClick(context),
             ),
             SizedBox(height: 5),
             ElevatedButton(

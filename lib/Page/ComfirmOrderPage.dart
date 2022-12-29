@@ -70,6 +70,9 @@ class _ComfirmOrderPageState extends State<ComfirmOrderPage> {
       appBar: AppBar(
         title: const Text("Comfirm Order"),
         backgroundColor: PrimaryColor,
+        leading: BackButton(
+          onPressed: () => Navigator.pop(context, true),
+        ),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(
