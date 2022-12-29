@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mufyp_orderaholic_2c_client/Model/MenuItemModel.dart';
 import '../Config/Theme.dart';
+import '../Function/CheckCurrentOrder.dart';
 import '../Function/FireStoreHelper.dart';
 
 class ComfirmOrderPage extends StatefulWidget {
@@ -21,7 +22,44 @@ class ComfirmOrderPage extends StatefulWidget {
 
 class _ComfirmOrderPageState extends State<ComfirmOrderPage> {
   void btn_submitOrder_onClick() {
-    sendOrder(widget.OrderList, widget.orderID, widget.restaurantID);
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: SecondaryColor,
+          title: const Text(
+            "Order Sent",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          content: const Text(
+            "Your order has been sent to the restaurant",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                sendOrder(
+                    widget.OrderList, widget.orderID, widget.restaurantID);
+                setCurrentOrder(widget.restaurantID, widget.orderID);
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                "OK",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override

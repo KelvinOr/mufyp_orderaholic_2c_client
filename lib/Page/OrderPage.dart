@@ -36,14 +36,13 @@ class _OrderPageState extends State<OrderPage> {
     );
 
     var _restaurnatInfo = await getRestaurants(orderID.RestaurantID.toString());
-    if (_restaurnatInfo.toString() != "null") {
-      _resturantName =
-          jsonDecode(_restaurnatInfo.toString())["Name"].toString();
 
-      Map<String, dynamic> testjsoncode =
-          jsonDecode(_restaurnatInfo.toString());
+    if (_restaurnatInfo != null) {
+      _resturantName = _restaurnatInfo["Name"].toString();
 
-      if (_restaurnatInfo.toString() != "null") {
+      Map<String, dynamic> testjsoncode = _restaurnatInfo;
+
+      if (_restaurnatInfo != null) {
         var CurrentTime = DateTime.now().hour.toString();
         CurrentTime = "8";
         if (int.parse(CurrentTime) >= 7 && int.parse(CurrentTime) < 11) {

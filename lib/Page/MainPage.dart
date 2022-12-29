@@ -4,10 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:mufyp_orderaholic_2c_client/Config/Theme.dart';
+import '../Function/FireStoreHelper.dart';
 import '../Function/FirebaseAuth.dart';
 import '../Function/CheckCurrentOrder.dart';
 import '../Function/RecommendSystem.dart';
 import 'package:mufyp_orderaholic_2c_client/Page/QRCodeScanner.dart';
+import 'package:mufyp_orderaholic_2c_client/Page/OrderPage.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -19,6 +21,10 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   var user = FirebaseAuth.instance.currentUser;
   var currentOrder = null;
+  var OrderIsFinish = true;
+  var restaurantInfo = {
+    'name': '',
+  };
 
   ScrollController _scrollController = new ScrollController();
   @override
@@ -35,9 +41,16 @@ class _MainPageState extends State<MainPage> {
       Navigator.pop(context);
     }
     GetRecommendTable('Monday', 'breakfast').then((value) => print(value));
-    checkCurrentOrder().then((value) {
+    checkCurrentOrder().then((value) async {
       if (value != null) {
         currentOrder = jsonDecode(value);
+        if (currentOrder != null) {
+          OrderIsFinish = false;
+          await getRestaurants(currentOrder['restaurantID'])
+              .then((value) => restaurantInfo['name'] = value['Name']);
+          print(restaurantInfo);
+          setState(() {});
+        }
 
         setState(() {});
       }
@@ -45,17 +58,43 @@ class _MainPageState extends State<MainPage> {
   }
 
   currentOrder_widget(Size size) {
-    if (currentOrder != null) {
-      print(size.width);
-      return Card(
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: size.width * 0.1,
-            right: size.width * 0.1,
-            top: 20,
-            bottom: 20,
+    if (OrderIsFinish != true) {
+      return InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              //send data to new page
+              builder: (context) => OrderPage(
+                code: jsonEncode({
+                  "RestaurantID": currentOrder['restaurantID'],
+                  "OrderID": currentOrder['orderID']
+                }),
+              ),
+            ),
+          );
+        },
+        child: Card(
+          color: SecondaryColor,
+          child: SizedBox(
+            height: size.height * 0.07,
+            width: size.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Current Order: " +
+                      restaurantInfo['name'].toString() +
+                      "\nOrder ID: " +
+                      currentOrder['orderID'],
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
           ),
-          child: Text("Current Order: " + currentOrder.toString()),
         ),
       );
     } else {

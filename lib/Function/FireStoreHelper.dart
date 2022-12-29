@@ -6,18 +6,18 @@ import '../Model/OrderItemFullModel.dart';
 
 var db = FirebaseFirestore.instance;
 
-Future<String> getRestaurants(String restaurantID) async {
+Future<dynamic> getRestaurants(String restaurantID) async {
   final docRef = db.collection("restaurants").doc(restaurantID);
 
   var result = await docRef.get().then((doc) {
     if (doc.exists) {
-      print(doc.data());
-      return jsonEncode(doc.data());
+      return doc.data();
     } else {
-      return "null";
+      return null;
     }
   });
-  return result.toString();
+
+  return result;
 }
 
 Future<void> sendOrder(
@@ -72,6 +72,7 @@ Future<dynamic> getOrderInfo(String restaurantID, String orderID) {
       return null;
     }
   });
+  print(result);
   return result;
 }
 

@@ -33,6 +33,9 @@ class _CheckCurrentOrderStatusOage extends State<CheckCurrentOrderStatusOage> {
     var _orderInfo = await getOrderInfo(orderID.RestaurantID, orderID.OrderID);
     if (_orderInfo != null) {
       item = _orderInfo["Item"];
+      if (item.length == 0) {
+        Navigator.of(context).pop();
+      }
       setState(() {});
     } else {
       checkIsNull = true;
@@ -50,80 +53,81 @@ class _CheckCurrentOrderStatusOage extends State<CheckCurrentOrderStatusOage> {
         backgroundColor: PrimaryColor,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(
-            left: size.width * 0.05, right: size.width * 0.05, top: 10),
-        physics: ScrollPhysics(),
-        child: Container(
-          width: size.width,
-          height: size.height,
-          child: Center(
-            child: Column(
-              children: [
-                ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      elevation: 6,
-                      margin: const EdgeInsets.all(5),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      color: SecondaryColor,
-                      child: ListTile(
-                        title: Text(
-                          item[index]["name"],
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        subtitle: Text(
-                          "Price: " +
-                              item[index]["price"].toString() +
-                              "\nStatus: " +
-                              item[index]["state"].toString() +
-                              "\nCreate Time: " +
-                              item[index]["time"],
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
+        scrollDirection: Axis.vertical,
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: size.width * 0.05,
+            right: size.width * 0.05,
+            top: 10,
+            bottom: 10,
+          ),
+          child: Column(
+            children: [
+              ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: item.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    elevation: 6,
+                    margin: const EdgeInsets.all(5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    color: SecondaryColor,
+                    child: ListTile(
+                      title: Text(
+                        item[index]["name"],
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    );
-                  },
-                ),
-                checkIsNull
-                    ? Text(
-                        "Order not found",
+                      subtitle: Text(
+                        "Price: " +
+                            item[index]["price"].toString() +
+                            "\nStatus: " +
+                            item[index]["state"].toString() +
+                            "\nCreate Time: " +
+                            item[index]["time"],
                         style: TextStyle(
                           color: Colors.grey,
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                         ),
-                      )
-                    : Container(),
-                const SizedBox(
-                  height: 10,
-                ),
-                ElevatedButton(
-                  onPressed: (() {
-                    Navigator.pop(context);
-                  }),
-                  child: Text("Back"),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: SecondaryColor,
-                    minimumSize: Size(size.width * 0.87, 47),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
+                  );
+                },
+              ),
+              checkIsNull
+                  ? Text(
+                      "Order not found",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  : Container(),
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(
+                onPressed: (() {
+                  Navigator.pop(context);
+                }),
+                child: Text("Back"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: SecondaryColor,
+                  minimumSize: Size(size.width * 0.87, 47),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
