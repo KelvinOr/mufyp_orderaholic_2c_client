@@ -15,17 +15,13 @@ class QRCodeScanner extends StatefulWidget {
 }
 
 class _QRCodeScannerState extends State<QRCodeScanner> {
-  String _result = "No result";
-
   Map<String, String> testOrder = {
-    "OrderID": "-NGPWWyGHFBDmB-reqs2",
+    "OrderID": "-NKlfSEKApeYZZ6o1UwS",
     "RestaurantID": "qXvxtFo1eDfgIJgu6gkwowqdXl13"
   };
 
   @override
   Widget build(BuildContext context) {
-    String _result = "";
-
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(

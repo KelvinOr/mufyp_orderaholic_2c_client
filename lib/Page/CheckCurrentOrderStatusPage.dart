@@ -16,6 +16,8 @@ class CheckCurrentOrderStatusOage extends StatefulWidget {
 class _CheckCurrentOrderStatusOage extends State<CheckCurrentOrderStatusOage> {
   var item = [];
   var checkIsNull = false;
+  var prepareItem = [];
+  var finishedItem = [];
 
   @override
   void initState() {
@@ -33,6 +35,14 @@ class _CheckCurrentOrderStatusOage extends State<CheckCurrentOrderStatusOage> {
     var _orderInfo = await getOrderInfo(orderID.RestaurantID, orderID.OrderID);
     if (_orderInfo != null) {
       item = _orderInfo["Item"];
+      for (var i = 0; i < item.length; i++) {
+        if (item[i]["state"] == "Prepare") {
+          prepareItem.add(item[i]);
+        } else {
+          finishedItem.add(item[i]);
+        }
+      }
+
       if (item.length == 0) {
         Navigator.of(context).pop();
       }
@@ -63,10 +73,25 @@ class _CheckCurrentOrderStatusOage extends State<CheckCurrentOrderStatusOage> {
           ),
           child: Column(
             children: [
+              Row(
+                children: [
+                  Text(
+                    "Preparing",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
               ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: item.length,
+                itemCount: prepareItem.length,
                 itemBuilder: (context, index) {
                   return Card(
                     elevation: 6,
@@ -77,7 +102,7 @@ class _CheckCurrentOrderStatusOage extends State<CheckCurrentOrderStatusOage> {
                     color: SecondaryColor,
                     child: ListTile(
                       title: Text(
-                        item[index]["name"],
+                        prepareItem[index]["name"],
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -86,11 +111,67 @@ class _CheckCurrentOrderStatusOage extends State<CheckCurrentOrderStatusOage> {
                       ),
                       subtitle: Text(
                         "Price: " +
-                            item[index]["price"].toString() +
+                            prepareItem[index]["price"].toString() +
                             "\nStatus: " +
-                            item[index]["state"].toString() +
+                            prepareItem[index]["state"].toString() +
                             "\nCreate Time: " +
-                            item[index]["time"],
+                            prepareItem[index]["time"],
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  Text(
+                    "Finished",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: finishedItem.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    elevation: 6,
+                    margin: const EdgeInsets.all(5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    color: SecondaryColor,
+                    child: ListTile(
+                      title: Text(
+                        finishedItem[index]["name"],
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                        "Price: " +
+                            finishedItem[index]["price"].toString() +
+                            "\nStatus: " +
+                            finishedItem[index]["state"].toString() +
+                            "\nCreate Time: " +
+                            finishedItem[index]["time"],
                         style: TextStyle(
                           color: Colors.grey,
                           fontSize: 15,
