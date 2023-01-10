@@ -25,36 +25,48 @@ class _MainPageState extends State<MainPage> {
   var restaurantInfo = {
     'name': '',
   };
+  var recommendItem;
 
-  ScrollController _scrollController = new ScrollController();
   @override
   void initState() {
     super.initState();
     _onInit();
-    _scrollController.addListener(() {
-      _onInit();
-    });
   }
 
   Future<void> _onInit() async {
     if (user == null) {
       Navigator.pop(context);
     }
-    GetRecommendTable('Monday', 'breakfast').then((value) => print(value));
+
     checkCurrentOrder().then((value) async {
-      if (value != null) {
-        currentOrder = jsonDecode(value);
+      if (value.toString() != "null") {
+        currentOrder = jsonDecode(value.toString());
+
         if (currentOrder != null) {
           OrderIsFinish = false;
-          await getRestaurants(currentOrder['restaurantID'])
-              .then((value) => restaurantInfo['name'] = value['Name']);
-          print(restaurantInfo);
-          setState(() {});
+          // await getRestaurants(currentOrder['restaurantID'])
+          //     .then((value) => restaurantInfo['name'] = value['Name']);
+          // print(restaurantInfo);
+          var check_result = await getOrderInfo(
+              currentOrder['restaurantID'], currentOrder['orderID']);
+          if (check_result != null) {
+            await getRestaurants(currentOrder['restaurantID'])
+                .then((value) => restaurantInfo['name'] = value['Name']);
+          } else {
+            await getRestaurants(currentOrder['restaurantID'])
+                .then((value) => SetRecommendTable(value.toString()));
+            removeCurrentOrder();
+            currentOrder = null;
+            OrderIsFinish = true;
+          }
         }
-
-        setState(() {});
+      } else {
+        currentOrder = null;
+        OrderIsFinish = true;
       }
     });
+    Recommendation();
+    setState(() {});
   }
 
   currentOrder_widget(Size size) {
@@ -135,13 +147,14 @@ class _MainPageState extends State<MainPage> {
           child: EasyRefresh(
             onRefresh: () async {
               _onInit();
+              print(currentOrder);
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //Main Item
                 SizedBox(
-                  height: size.height * 0.7,
+                  height: size.height * 0.75,
                   child: Container(
                     width: size.width,
                     child: Column(
@@ -171,18 +184,6 @@ class _MainPageState extends State<MainPage> {
                     ),
                   ),
                 ),
-                //Test Button
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: Size(size.width * 0.8, 40),
-                    backgroundColor: SecondaryColor,
-                  ),
-                  onPressed: () {
-                    SetRecommendTable(
-                        'Monday', 'breakfast', ['Western Restaurant']);
-                  },
-                  child: const Text("Test set table"),
-                ),
                 //Bottom Item
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -199,7 +200,6 @@ class _MainPageState extends State<MainPage> {
                   },
                   child: const Text("Scan QR Code"),
                 ),
-                SizedBox(height: 20),
               ],
             ),
           ),

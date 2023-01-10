@@ -12,10 +12,17 @@ Future<void> setCurrentOrder(String restaurantID, String orderID) async {
   prefs.setString(key, jsonEncode(temp));
 }
 
-Future<String> checkCurrentOrder() async {
+Future<String?> checkCurrentOrder() async {
   final prefs = await SharedPreferences.getInstance();
   final key = 'current_order';
   final value = prefs.getString(key);
 
   return value.toString();
+}
+
+Future<void> removeCurrentOrder() async {
+  final prefs = await SharedPreferences.getInstance();
+  final key = 'current_order';
+
+  await prefs.remove(key);
 }
