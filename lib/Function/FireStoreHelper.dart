@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:mufyp_orderaholic_2c_client/Model/MenuItemModel.dart';
 import 'dart:convert';
 import '../Model/OrderItemFullModel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 var db = FirebaseFirestore.instance;
 
@@ -51,7 +52,10 @@ Future<void> sendOrder(
     }
   }
 
+  var CID = FirebaseAuth.instance.currentUser?.uid.toString();
+
   dbRef.update({
+    "CID": CID,
     "Item": orderItemArray,
   });
 }

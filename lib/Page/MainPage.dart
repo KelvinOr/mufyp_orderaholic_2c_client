@@ -21,7 +21,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   var user = FirebaseAuth.instance.currentUser;
   var currentOrder = null;
-  var OrderIsFinish = true;
+  var OrderNotFinish = true;
   var restaurantInfo = {
     'name': '',
   };
@@ -43,34 +43,29 @@ class _MainPageState extends State<MainPage> {
         currentOrder = jsonDecode(value.toString());
 
         if (currentOrder != null) {
-          OrderIsFinish = false;
+          OrderNotFinish = false;
           // await getRestaurants(currentOrder['restaurantID'])
           //     .then((value) => restaurantInfo['name'] = value['Name']);
           // print(restaurantInfo);
           var check_result = await getOrderInfo(
               currentOrder['restaurantID'], currentOrder['orderID']);
-          if (check_result != null) {
-            await getRestaurants(currentOrder['restaurantID'])
-                .then((value) => restaurantInfo['name'] = value['Name']);
-          } else {
-            await getRestaurants(currentOrder['restaurantID'])
-                .then((value) => SetRecommendTable(value.toString()));
+          if (check_result == null) {
             removeCurrentOrder();
             currentOrder = null;
-            OrderIsFinish = true;
+            OrderNotFinish = true;
           }
         }
       } else {
         currentOrder = null;
-        OrderIsFinish = true;
+        OrderNotFinish = true;
       }
     });
-    Recommendation();
+    //Recommendation();
     setState(() {});
   }
 
   currentOrder_widget(Size size) {
-    if (OrderIsFinish != true) {
+    if (OrderNotFinish != true) {
       return InkWell(
         onTap: () {
           Navigator.push(

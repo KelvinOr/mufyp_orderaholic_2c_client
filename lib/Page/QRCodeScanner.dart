@@ -16,7 +16,7 @@ class QRCodeScanner extends StatefulWidget {
 
 class _QRCodeScannerState extends State<QRCodeScanner> {
   Map<String, String> testOrder = {
-    "OrderID": "-NKlfSEKApeYZZ6o1UwS",
+    "OrderID": "-NLj4Z_e95iv-wDUQhgX",
     "RestaurantID": "qXvxtFo1eDfgIJgu6gkwowqdXl13"
   };
 
