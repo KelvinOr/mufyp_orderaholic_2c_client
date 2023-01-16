@@ -44,9 +44,6 @@ class _MainPageState extends State<MainPage> {
 
         if (currentOrder != null) {
           OrderNotFinish = false;
-          // await getRestaurants(currentOrder['restaurantID'])
-          //     .then((value) => restaurantInfo['name'] = value['Name']);
-          // print(restaurantInfo);
           var check_result = await getOrderInfo(
               currentOrder['restaurantID'], currentOrder['orderID']);
           if (check_result == null) {
@@ -60,7 +57,7 @@ class _MainPageState extends State<MainPage> {
         OrderNotFinish = true;
       }
     });
-    //Recommendation();
+    Recommendation().then((value) => {print(value)});
     setState(() {});
   }
 

@@ -7,7 +7,7 @@
         {
             "name": "mufyp_orderaholic_2c_client",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
         },
         {
             "name": "mufyp_orderaholic_2c_client (profile mode)",

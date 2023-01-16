@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import './FireStoreHelper.dart';
 
 Future<List<String>?> GetRecommendTable(String week, String TimeRange) async {
   final prefs = await SharedPreferences.getInstance();
@@ -56,27 +57,10 @@ Future<dynamic> SetRecommendTable(dynamic ResInfo) async {
 }
 
 Future<dynamic> Recommendation() async {
-  var week = DateTime.now().weekday;
-  var TimeRange = DateTime.now().hour;
-  var result;
-  if (TimeRange >= 7 && TimeRange < 11) {
-    result = await GetRecommendTable(week.toString(), "7-11")
-        .then((value) => result = value);
-    print("Recommendation Debug 64: " + result.toString());
+  var userOrderRecord = await getUserOrderRecord();
+  if (userOrderRecord == null) {
+    
+  } else {
+    return userOrderRecord;
   }
-  if (TimeRange >= 11 && TimeRange < 17) {
-    result = await GetRecommendTable(week.toString(), "11-17")
-        .then((value) => result = value);
-    print("Recommendation Debug 68: " + result.toString());
-  }
-  if (TimeRange >= 17 && TimeRange < 23) {
-    await GetRecommendTable(week.toString(), "17-23")
-        .then((value) => {result = value});
-    print("Recommendation Debug 72: " + result.toString());
-  }
-  if (TimeRange >= 23 && TimeRange < 7) {
-    return null;
-  }
-
-  return;
 }

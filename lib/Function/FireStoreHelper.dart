@@ -98,3 +98,32 @@ Future<bool> checkOrderIsFinish(String restaurantID, String orderID) async {
   });
   return result;
 }
+
+Future<dynamic> getUserOrderRecord() async {
+  var userID = FirebaseAuth.instance.currentUser?.uid.toString();
+  final docRef = db.collection("history_custom").doc(userID);
+
+  var result = await docRef.get().then((doc) {
+    if (doc.exists) {
+      return doc.data();
+    } else {
+      return null;
+    }
+  });
+
+  return result;
+}
+
+Future<dynamic> getRestaurantByType(String type) async {
+  final docRef = db.collection("restaurants").where("type", isEqualTo: type);
+
+  var result = docRef.get().then((value) {
+    if (value.docs.isNotEmpty) {
+      return value.docs;
+    } else {
+      return null;
+    }
+  });
+
+  return result;
+}
