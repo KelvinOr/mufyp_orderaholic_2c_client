@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mufyp_orderaholic_2c_client/Config/Theme.dart';
+import 'package:mufyp_orderaholic_2c_client/Page/ViewMyRecordPage.dart';
 import './MyLicensePage.dart';
 
 class SettingPage extends StatefulWidget {
@@ -57,6 +58,23 @@ class _SettingPage extends State<SettingPage> {
               ),
             ),
             SizedBox(height: 30),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(size.width * 1, size.height * 0.05),
+                backgroundColor: SecondaryColor,
+              ),
+              child: const Text("View My Record"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    //to View My Record Page
+                    builder: (context) => const ViewMyRecorderPage(),
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 10),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(size.width * 1, size.height * 0.05),
