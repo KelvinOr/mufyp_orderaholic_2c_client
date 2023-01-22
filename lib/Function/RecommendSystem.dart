@@ -58,9 +58,26 @@ Future<dynamic> SetRecommendTable(dynamic ResInfo) async {
 
 Future<dynamic> Recommendation() async {
   var userOrderRecord = await getUserOrderRecord();
+  var RecordDecode = [];
+
+  for (var i = 0; i < userOrderRecord.length; i++) {
+    for (var j = 0; j < userOrderRecord.values.elementAt(i).length; j++) {
+      for (var k = 0;
+          k < userOrderRecord.values.elementAt(i)[j]["Item"].length;
+          k++) {
+        RecordDecode.add(userOrderRecord.values.elementAt(i)[j]["Item"][k]);
+      }
+    }
+  }
+
+  for (var i = 0; i < RecordDecode.length; i++) {
+    RecordDecode[i]["time"] = DateTime.parse(RecordDecode[i]["time"]);
+  }
+  RecordDecode.sort((a, b) => a["time"].compareTo(b["time"]));
+
   if (userOrderRecord == null) {
-    
+    return null;
   } else {
-    return userOrderRecord;
+    return RecordDecode;
   }
 }
