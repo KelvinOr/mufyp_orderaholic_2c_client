@@ -75,6 +75,29 @@ Future<dynamic> Recommendation() async {
   }
   RecordDecode.sort((a, b) => a["time"].compareTo(b["time"]));
 
+  var breakfast = [];
+  var lunch = [];
+  var dinner = [];
+
+  for (var i = 0; i < RecordDecode.length; i++) {
+    if (RecordDecode[i]["time"].hour >= 7 &&
+        RecordDecode[i]["time"].hour < 11) {
+      breakfast.add(RecordDecode[i]);
+    }
+    if (RecordDecode[i]["time"].hour >= 11 &&
+        RecordDecode[i]["time"].hour < 17) {
+      lunch.add(RecordDecode[i]);
+    }
+    if (RecordDecode[i]["time"].hour >= 17 &&
+        RecordDecode[i]["time"].hour < 23) {
+      dinner.add(RecordDecode[i]);
+    }
+  }
+
+  print('breakfast: ${breakfast}');
+  print('lunch: ${lunch}');
+  print('dinner: ${dinner}');
+
   if (userOrderRecord == null) {
     return null;
   } else {
