@@ -115,11 +115,11 @@ Future<dynamic> getUserOrderRecord() async {
 }
 
 Future<dynamic> getRestaurantByType(String type) async {
-  final docRef = db.collection("restaurants").where("type", isEqualTo: type);
+  final docRef = db.collection("restaurants").where("Type", isEqualTo: type);
 
-  var result = docRef.get().then((value) {
-    if (value.docs.isNotEmpty) {
-      return value.docs;
+  var result = await docRef.get().then((doc) {
+    if (doc.docs.isNotEmpty) {
+      return doc.docs.map((e) => e.data()).toList();
     } else {
       return null;
     }

@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
 import './FireStoreHelper.dart';
+import 'dart:math';
 
 Future<List<String>?> GetRecommendTable(String week, String TimeRange) async {
   final prefs = await SharedPreferences.getInstance();
@@ -59,14 +61,35 @@ Future<dynamic> SetRecommendTable(dynamic ResInfo) async {
 Future<dynamic> Recommendation() async {
   var userOrderRecord = await getUserOrderRecord();
   var RecordDecode = [];
+  var allRestaurantType = [
+    "Chinese Restaurant",
+    "Western Restaurant",
+    "Asian restaurant",
+    "Fast Food",
+    "Bar",
+    "Cafe",
+    "Other"
+  ];
+
+  // for (var i = 0; i < userOrderRecord.length; i++) {
+  //   for (var j = 0; j < userOrderRecord.values.elementAt(i).length; j++) {
+  //     for (var k = 0;
+  //         k < userOrderRecord.values.elementAt(i)[j]["Item"].length;
+  //         k++) {
+  //       RecordDecode.add(userOrderRecord.values.elementAt(i)[j]["Item"][k]);
+  //     }
+  //   }
+  // }
 
   for (var i = 0; i < userOrderRecord.length; i++) {
     for (var j = 0; j < userOrderRecord.values.elementAt(i).length; j++) {
-      for (var k = 0;
-          k < userOrderRecord.values.elementAt(i)[j]["Item"].length;
-          k++) {
-        RecordDecode.add(userOrderRecord.values.elementAt(i)[j]["Item"][k]);
-      }
+      RecordDecode.add({
+        "restaurantName": userOrderRecord.values.elementAt(i)[j]
+            ["restaurantName"],
+        "restaurantType": userOrderRecord.values.elementAt(i)[j]
+            ["restaurantType"],
+        "time": userOrderRecord.values.elementAt(i)[j]["Item"][0]["time"]
+      });
     }
   }
 
@@ -97,6 +120,58 @@ Future<dynamic> Recommendation() async {
   print('breakfast: ${breakfast}');
   print('lunch: ${lunch}');
   print('dinner: ${dinner}');
+
+  //current time
+  var TimeRange_temp = DateTime.now().hour;
+  var recommandTable = [];
+  // if (TimeRange_temp >= 7 && TimeRange_temp < 11) {
+  //   if (breakfast.length == 0) {
+  //     for (var i = 0; i < 5; i++) {
+  //       recommandTable.add(getRestaurantByType(
+  //           allRestaurantType[Random().nextInt(allRestaurantType.length)]
+  //               .toString()));
+  //     }
+  //   } else {
+  //     for (var i = 0; i < 5; i++) {
+  //       recommandTable.add(await getRestaurantByType(
+  //           breakfast[Random().nextInt(breakfast.length)]["restaurantType"]));
+  //     }
+  //   }
+  // }
+
+  var QueryResult = [];
+  if (breakfast.length == 0) {
+    for (var i = 0; i < 5; i++) {
+      QueryResult = await getRestaurantByType(
+          allRestaurantType[Random().nextInt(allRestaurantType.length)]);
+      recommandTable.add(QueryResult[Random().nextInt(QueryResult.length)]);
+    }
+  } else {
+    for (var i = 0; i < 5; i++) {
+      QueryResult = await getRestaurantByType(
+          breakfast[Random().nextInt(breakfast.length)]["restaurantType"]);
+      var temp = QueryResult[Random().nextInt(QueryResult.length)];
+      print("temp: ${temp}");
+      //check item in recommandTable
+      var isInlist = false;
+      if (recommandTable.length > 0) {
+        for (var k = 0; k < recommandTable.length; k++) {
+          if (temp["Name"] == recommandTable[k]["Name"]) {
+            isInlist = true;
+            break;
+          }
+        }
+      }
+      if (isInlist == false) {
+        recommandTable.add(temp);
+      } else {
+        continue;
+      }
+    }
+  }
+
+  print("RecommandTable:  ${recommandTable}");
+  print("length: ${recommandTable.length}");
 
   if (userOrderRecord == null) {
     return null;

@@ -24,21 +24,20 @@ class _ViewMyRecordPage extends State<ViewMyRecorderPage> {
   init() async {
     var result = await getUserOrderRecord();
 
-    print(result["16-1-2023"]);
-    print(result["16-1-2023"][0]["Item"].length.toString());
-
     for (var i = 0; i < result.length; i++) {
       RecordDate.add(result.keys.elementAt(i));
       for (var j = 0; j < result.values.elementAt(i).length; j++) {
         for (var k = 0; k < result.values.elementAt(i)[j]["Item"].length; k++) {
           RecordItem.add(result.values.elementAt(i)[j]["Item"][k]);
+          RecordItem[RecordItem.length - 1]["restaurantName"] =
+              result.values.elementAt(i)[j]["restaurantName"];
           RecordItem[RecordItem.length - 1]["Date"] =
               result.keys.elementAt(i).toString();
         }
       }
     }
 
-    print(RecordDate);
+    print(RecordItem);
     print(RecordItem[0]["price"]);
 
     setState(() {});
@@ -121,9 +120,12 @@ class _ViewMyRecordPage extends State<ViewMyRecorderPage> {
                                         "\n" +
                                         "Quantity: " +
                                         RecordItem[index2]["quantity"]
-                                            .toString(),
+                                            .toString() +
+                                        "\n" +
+                                        "Restaurant: " +
+                                        RecordItem[index2]["restaurantName"],
                                     style: TextStyle(
-                                      color: Colors.grey,
+                                      color: Color.fromARGB(255, 216, 216, 216),
                                     ),
                                   ),
                                 ),
