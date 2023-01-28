@@ -57,8 +57,12 @@ class _MainPageState extends State<MainPage> {
         OrderNotFinish = true;
       }
     });
-    Recommendation().then((value) => {print(value)});
-    setState(() {});
+    Recommendation().then((value) => {
+          setState(() {
+            recommendItem = value;
+          })
+        });
+    print('recommendItem: ${recommendItem}');
   }
 
   currentOrder_widget(Size size) {
@@ -172,10 +176,54 @@ class _MainPageState extends State<MainPage> {
                           height: 10,
                         ),
                         currentOrder_widget(size),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Recommend Item",
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        recommendItem != null
+                            ? ListView.builder(
+                                itemCount: recommendItem.length,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return Card(
+                                    color: SecondaryColor,
+                                    child: SizedBox(
+                                      height: size.height * 0.07,
+                                      width: size.width,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            recommendItem[index]['Name']
+                                                .toString(),
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              )
+                            : Text("No Item"),
                       ],
                     ),
                   ),
                 ),
+
                 //Bottom Item
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(

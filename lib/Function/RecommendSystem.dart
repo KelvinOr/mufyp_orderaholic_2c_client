@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
 import './FireStoreHelper.dart';
@@ -61,6 +62,7 @@ Future<dynamic> SetRecommendTable(dynamic ResInfo) async {
 Future<dynamic> Recommendation() async {
   var userOrderRecord = await getUserOrderRecord();
   var RecordDecode = [];
+  dynamic QueryResult = [];
   var allRestaurantType = [
     "Chinese Restaurant",
     "Western Restaurant",
@@ -80,6 +82,34 @@ Future<dynamic> Recommendation() async {
   //     }
   //   }
   // }
+
+  if (userOrderRecord == null) {
+    var recommandTable = [];
+    for (var i = 0; i < 5; i++) {
+      QueryResult = await getRestaurantByType(
+          allRestaurantType[Random().nextInt(allRestaurantType.length)]);
+      if (QueryResult == null) {
+        i--;
+        continue;
+      }
+      var temp = QueryResult[Random().nextInt(QueryResult.length)];
+      var isInlist = false;
+      if (recommandTable.length > 0) {
+        for (var k = 0; k < recommandTable.length; k++) {
+          if (temp["Name"] == recommandTable[k]["Name"]) {
+            isInlist = true;
+            break;
+          }
+        }
+      }
+      if (isInlist == false) {
+        recommandTable.add(temp);
+      } else {
+        continue;
+      }
+    }
+    return recommandTable;
+  }
 
   for (var i = 0; i < userOrderRecord.length; i++) {
     for (var j = 0; j < userOrderRecord.values.elementAt(i).length; j++) {
@@ -139,20 +169,166 @@ Future<dynamic> Recommendation() async {
   //   }
   // }
 
-  var QueryResult = [];
-  if (breakfast.length == 0) {
-    for (var i = 0; i < 5; i++) {
-      QueryResult = await getRestaurantByType(
-          allRestaurantType[Random().nextInt(allRestaurantType.length)]);
-      recommandTable.add(QueryResult[Random().nextInt(QueryResult.length)]);
+  if (TimeRange_temp >= 7 && TimeRange_temp < 11) {
+    if (breakfast.length == 0) {
+      for (var i = 0; i < 5; i++) {
+        QueryResult = await getRestaurantByType(
+            allRestaurantType[Random().nextInt(allRestaurantType.length)]);
+        if (QueryResult == null) {
+          i--;
+          continue;
+        }
+        var temp = QueryResult[Random().nextInt(QueryResult.length)];
+        var isInlist = false;
+        if (recommandTable.length > 0) {
+          for (var k = 0; k < recommandTable.length; k++) {
+            if (temp["Name"] == recommandTable[k]["Name"]) {
+              isInlist = true;
+              break;
+            }
+          }
+        }
+        if (isInlist == false) {
+          recommandTable.add(temp);
+        } else {
+          continue;
+        }
+      }
+    } else {
+      for (var i = 0; i < 5; i++) {
+        QueryResult = await getRestaurantByType(
+            breakfast[Random().nextInt(breakfast.length)]["restaurantType"]);
+        if (QueryResult == null) {
+          i--;
+          continue;
+        }
+        var temp = QueryResult[Random().nextInt(QueryResult.length)];
+        print("temp: ${temp}");
+        //check item in recommandTable
+        var isInlist = false;
+        if (recommandTable.length > 0) {
+          for (var k = 0; k < recommandTable.length; k++) {
+            if (temp["Name"] == recommandTable[k]["Name"]) {
+              isInlist = true;
+              break;
+            }
+          }
+        }
+        if (isInlist == false) {
+          recommandTable.add(temp);
+        } else {
+          continue;
+        }
+      }
+    }
+  } else if (TimeRange_temp >= 11 && TimeRange_temp < 17) {
+    if (lunch.length == 0) {
+      for (var i = 0; i < 5; i++) {
+        QueryResult = await getRestaurantByType(
+            allRestaurantType[Random().nextInt(allRestaurantType.length)]);
+        if (QueryResult == null) {
+          i--;
+          continue;
+        }
+        var temp = QueryResult[Random().nextInt(QueryResult.length)];
+        var isInlist = false;
+        if (recommandTable.length > 0) {
+          for (var k = 0; k < recommandTable.length; k++) {
+            if (temp["Name"] == recommandTable[k]["Name"]) {
+              isInlist = true;
+              break;
+            }
+          }
+        }
+        if (isInlist == false) {
+          recommandTable.add(temp);
+        } else {
+          continue;
+        }
+      }
+    } else {
+      for (var i = 0; i < 5; i++) {
+        QueryResult = await getRestaurantByType(
+            lunch[Random().nextInt(lunch.length)]["restaurantType"]);
+        if (QueryResult == null) {
+          i--;
+          continue;
+        }
+        var temp = QueryResult[Random().nextInt(QueryResult.length)];
+        print("temp: ${temp}");
+        //check item in recommandTable
+        var isInlist = false;
+        if (recommandTable.length > 0) {
+          for (var k = 0; k < recommandTable.length; k++) {
+            if (temp["Name"] == recommandTable[k]["Name"]) {
+              isInlist = true;
+              break;
+            }
+          }
+        }
+        if (isInlist == false) {
+          recommandTable.add(temp);
+        } else {
+          continue;
+        }
+      }
+    }
+  } else if (TimeRange_temp >= 17 && TimeRange_temp < 23) {
+    if (dinner.length == 0) {
+      for (var i = 0; i < 5; i++) {
+        QueryResult = await getRestaurantByType(
+            allRestaurantType[Random().nextInt(allRestaurantType.length)]);
+        if (QueryResult == null) {
+          i--;
+          continue;
+        }
+        var temp = QueryResult[Random().nextInt(QueryResult.length)];
+        var isInlist = false;
+        if (recommandTable.length > 0) {
+          for (var k = 0; k < recommandTable.length; k++) {
+            if (temp["Name"] == recommandTable[k]["Name"]) {
+              isInlist = true;
+              break;
+            }
+          }
+        }
+      }
+    } else {
+      for (var i = 0; i < 5; i++) {
+        QueryResult = await getRestaurantByType(
+            dinner[Random().nextInt(dinner.length)]["restaurantType"]);
+        if (QueryResult == null) {
+          i--;
+          continue;
+        }
+        var temp = QueryResult[Random().nextInt(QueryResult.length)];
+        print("temp: ${temp}");
+        //check item in recommandTable
+        var isInlist = false;
+        if (recommandTable.length > 0) {
+          for (var k = 0; k < recommandTable.length; k++) {
+            if (temp["Name"] == recommandTable[k]["Name"]) {
+              isInlist = true;
+              break;
+            }
+          }
+        }
+        if (isInlist == false) {
+          recommandTable.add(temp);
+        } else {
+          continue;
+        }
+      }
     }
   } else {
     for (var i = 0; i < 5; i++) {
       QueryResult = await getRestaurantByType(
-          breakfast[Random().nextInt(breakfast.length)]["restaurantType"]);
+          allRestaurantType[Random().nextInt(allRestaurantType.length)]);
+      if (QueryResult == null) {
+        i--;
+        continue;
+      }
       var temp = QueryResult[Random().nextInt(QueryResult.length)];
-      print("temp: ${temp}");
-      //check item in recommandTable
       var isInlist = false;
       if (recommandTable.length > 0) {
         for (var k = 0; k < recommandTable.length; k++) {
@@ -162,20 +338,10 @@ Future<dynamic> Recommendation() async {
           }
         }
       }
-      if (isInlist == false) {
-        recommandTable.add(temp);
-      } else {
-        continue;
-      }
     }
   }
 
   print("RecommandTable:  ${recommandTable}");
   print("length: ${recommandTable.length}");
-
-  if (userOrderRecord == null) {
-    return null;
-  } else {
-    return RecordDecode;
-  }
+  return recommandTable;
 }
