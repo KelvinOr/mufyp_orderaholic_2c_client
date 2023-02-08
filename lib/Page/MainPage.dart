@@ -59,6 +59,7 @@ class _MainPageState extends State<MainPage> {
     });
     Recommendation().then((value) => {
           setState(() {
+            print("Debug:${value}");
             recommendItem = value;
           })
         });
@@ -195,6 +196,7 @@ class _MainPageState extends State<MainPage> {
                                 itemCount: recommendItem.length,
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
+                                  //TODO: 美化
                                   return Card(
                                     color: SecondaryColor,
                                     child: SizedBox(
@@ -208,7 +210,8 @@ class _MainPageState extends State<MainPage> {
                                             recommendItem[index]['Name']
                                                 .toString(),
                                             style: TextStyle(
-                                              color: Colors.white,
+                                              color: Color.fromARGB(
+                                                  255, 217, 201, 201),
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
