@@ -283,6 +283,7 @@ Future<dynamic> Recommendation() async {
           continue;
         }
         var temp = QueryResult[Random().nextInt(QueryResult.length)];
+        print("temp286: ${temp}");
         var isInlist = false;
         if (recommandTable.length > 0) {
           for (var k = 0; k < recommandTable.length; k++) {
@@ -291,6 +292,11 @@ Future<dynamic> Recommendation() async {
               break;
             }
           }
+        }
+        if (isInlist == false) {
+          recommandTable.add(temp);
+        } else {
+          continue;
         }
       }
     } else {
@@ -302,7 +308,6 @@ Future<dynamic> Recommendation() async {
           continue;
         }
         var temp = QueryResult[Random().nextInt(QueryResult.length)];
-        print("temp: ${temp}");
         //check item in recommandTable
         var isInlist = false;
         if (recommandTable.length > 0) {
@@ -312,6 +317,8 @@ Future<dynamic> Recommendation() async {
               break;
             }
           }
+        } else {
+          recommandTable.add(temp);
         }
         if (isInlist == false) {
           recommandTable.add(temp);
@@ -329,6 +336,7 @@ Future<dynamic> Recommendation() async {
         continue;
       }
       var temp = QueryResult[Random().nextInt(QueryResult.length)];
+      print("temp: ${temp}");
       var isInlist = false;
       if (recommandTable.length > 0) {
         for (var k = 0; k < recommandTable.length; k++) {

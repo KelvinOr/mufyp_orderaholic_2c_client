@@ -59,7 +59,7 @@ class _MainPageState extends State<MainPage> {
     });
     Recommendation().then((value) => {
           setState(() {
-            print("Debug:${value}");
+            print("Debug value: ${value}");
             recommendItem = value;
           })
         });
