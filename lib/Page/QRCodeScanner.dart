@@ -17,7 +17,6 @@ class QRCodeScanner extends StatefulWidget {
 
 class _QRCodeScannerState extends State<QRCodeScanner> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  dynamic? result;
   QRViewController? _controller;
 
   Map<String, String> testOrder = {
@@ -101,8 +100,15 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
     _controller = controller;
     controller.scannedDataStream.listen((result) {
       _controller!.stopCamera();
-      result = result;
-      print("Result: ${result.code}");
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          //send data to new page
+          builder: (context) => OrderPage(
+            code: jsonEncode(result.code.toString()),
+          ),
+        ),
+      );
     });
   }
 
