@@ -158,12 +158,15 @@ class _MainPageState extends State<MainPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Recommend Restaurant",
+                          "Orderaholic",
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
+                        ),
+                        SizedBox(
+                          height: 10,
                         ),
                         Text(
                           "Current Order",
