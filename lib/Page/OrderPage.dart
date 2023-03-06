@@ -44,6 +44,7 @@ class _OrderPageState extends State<OrderPage> {
 
       if (_restaurnatInfo != null) {
         var CurrentTime = DateTime.now().hour.toString();
+        //TODO: remove debug time
         CurrentTime = "8";
         if (int.parse(CurrentTime) >= 7 && int.parse(CurrentTime) < 11) {
           for (var items in testjsoncode['menu']['breakfast']) {

@@ -40,10 +40,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^2.4.1
   firebase_auth: ^4.2.5
-  #mobile_scanner: ^2.0.0 #BSD
-  qr_code_scanner: ^1.0.1 #BSD
+  mobile_scanner: ^2.0.0 #BSD
+  #qr_code_scanner: ^1.0.1 #BSD
   cloud_firestore: ^4.3.1
   firebase_database: ^10.0.9
+  geolocator: ^9.0.2
 
 dev_dependencies:
   flutter_test:

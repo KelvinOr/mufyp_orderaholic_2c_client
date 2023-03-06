@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
 import './FireStoreHelper.dart';
 import 'dart:math';
+import 'package:geolocator/geolocator.dart';
 
 Future<List<String>?> GetRecommendTable(String week, String TimeRange) async {
   final prefs = await SharedPreferences.getInstance();
@@ -63,6 +64,7 @@ Future<dynamic> Recommendation() async {
   var userOrderRecord = await getUserOrderRecord();
   var RecordDecode = [];
   dynamic QueryResult = [];
+  dynamic temp = [];
   var allRestaurantType = [
     "Chinese Restaurant",
     "Western Restaurant",
@@ -72,6 +74,21 @@ Future<dynamic> Recommendation() async {
     "Cafe",
     "Other"
   ];
+  bool serviceEnabled;
+  dynamic position;
+
+  var permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      serviceEnabled = false;
+      return;
+    } else {
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    }
+  } else {
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  }
 
   // for (var i = 0; i < userOrderRecord.length; i++) {
   //   for (var j = 0; j < userOrderRecord.values.elementAt(i).length; j++) {
@@ -92,7 +109,28 @@ Future<dynamic> Recommendation() async {
         i--;
         continue;
       }
-      var temp = QueryResult[Random().nextInt(QueryResult.length)];
+
+      //GPS
+      if (serviceEnabled) {
+        //經，緯度計算QueryResult的距離, 用cos計算緯度差並排列QueryResult
+
+        QueryResult.sort((a, b) {
+          //two point distance sort with position
+          return (pow(double.parse(a["Coordinate"]["lat"]) - position.latitude,
+                      2) +
+                  pow(double.parse(a["Coordinate"]["lng"]) - position.longitude,
+                      2))
+              .compareTo(pow(
+                      double.parse(b["Coordinate"]["lat"]) - position.latitude,
+                      2) +
+                  pow(double.parse(b["Coordinate"]["lng"]) - position.longitude,
+                      2));
+        });
+        temp = QueryResult[Random().nextInt(QueryResult.length)];
+      } else {
+        temp = QueryResult[Random().nextInt(QueryResult.length)];
+      }
+
       var isInlist = false;
       if (recommandTable.length > 0) {
         for (var k = 0; k < recommandTable.length; k++) {
@@ -178,7 +216,37 @@ Future<dynamic> Recommendation() async {
           i--;
           continue;
         }
-        var temp = QueryResult[Random().nextInt(QueryResult.length)];
+
+        //var temp = QueryResult[Random().nextInt(QueryResult.length)];
+
+        //GPS
+        if (serviceEnabled) {
+          //經，緯度計算QueryResult的距離, 用cos計算緯度差並排列QueryResult
+
+          QueryResult.sort((a, b) {
+            //two point distance sort with position
+            return (pow(
+                        double.parse(a["Coordinate"]["lat"]) -
+                            position.latitude,
+                        2) +
+                    pow(
+                        double.parse(a["Coordinate"]["lng"]) -
+                            position.longitude,
+                        2))
+                .compareTo(pow(
+                        double.parse(b["Coordinate"]["lat"]) -
+                            position.latitude,
+                        2) +
+                    pow(
+                        double.parse(b["Coordinate"]["lng"]) -
+                            position.longitude,
+                        2));
+          });
+          temp = QueryResult[Random().nextInt(QueryResult.length)];
+        } else {
+          temp = QueryResult[Random().nextInt(QueryResult.length)];
+        }
+
         var isInlist = false;
         if (recommandTable.length > 0) {
           for (var k = 0; k < recommandTable.length; k++) {
@@ -202,7 +270,36 @@ Future<dynamic> Recommendation() async {
           i--;
           continue;
         }
-        var temp = QueryResult[Random().nextInt(QueryResult.length)];
+        //var temp = QueryResult[Random().nextInt(QueryResult.length)];
+
+        //GPS
+        if (serviceEnabled) {
+          //經，緯度計算QueryResult的距離, 用cos計算緯度差並排列QueryResult
+
+          QueryResult.sort((a, b) {
+            //two point distance sort with position
+            return (pow(
+                        double.parse(a["Coordinate"]["lat"]) -
+                            position.latitude,
+                        2) +
+                    pow(
+                        double.parse(a["Coordinate"]["lng"]) -
+                            position.longitude,
+                        2))
+                .compareTo(pow(
+                        double.parse(b["Coordinate"]["lat"]) -
+                            position.latitude,
+                        2) +
+                    pow(
+                        double.parse(b["Coordinate"]["lng"]) -
+                            position.longitude,
+                        2));
+          });
+          temp = QueryResult[Random().nextInt(QueryResult.length)];
+        } else {
+          temp = QueryResult[Random().nextInt(QueryResult.length)];
+        }
+
         print("temp: ${temp}");
         //check item in recommandTable
         var isInlist = false;
@@ -230,7 +327,36 @@ Future<dynamic> Recommendation() async {
           i--;
           continue;
         }
-        var temp = QueryResult[Random().nextInt(QueryResult.length)];
+
+        //GPS
+        if (serviceEnabled) {
+          //經，緯度計算QueryResult的距離, 用cos計算緯度差並排列QueryResult
+
+          QueryResult.sort((a, b) {
+            //two point distance sort with position
+            return (pow(
+                        double.parse(a["Coordinate"]["lat"]) -
+                            position.latitude,
+                        2) +
+                    pow(
+                        double.parse(a["Coordinate"]["lng"]) -
+                            position.longitude,
+                        2))
+                .compareTo(pow(
+                        double.parse(b["Coordinate"]["lat"]) -
+                            position.latitude,
+                        2) +
+                    pow(
+                        double.parse(b["Coordinate"]["lng"]) -
+                            position.longitude,
+                        2));
+          });
+          print('Debug Line354 : QueryResult: ${QueryResult.toString()}');
+          temp = QueryResult[Random().nextInt(QueryResult.length)];
+        } else {
+          temp = QueryResult[Random().nextInt(QueryResult.length)];
+        }
+
         var isInlist = false;
         if (recommandTable.length > 0) {
           for (var k = 0; k < recommandTable.length; k++) {
@@ -254,7 +380,38 @@ Future<dynamic> Recommendation() async {
           i--;
           continue;
         }
-        var temp = QueryResult[Random().nextInt(QueryResult.length)];
+        //temp = QueryResult[Random().nextInt(QueryResult.length)];
+
+        //GPS
+        if (serviceEnabled) {
+          //經，緯度計算QueryResult的距離, 用cos計算緯度差並排列QueryResult
+
+          QueryResult.sort((a, b) {
+            //two point distance sort with position
+            return (pow(
+                        double.parse(a["Coordinate"]["lat"]) -
+                            position.latitude,
+                        2) +
+                    pow(
+                        double.parse(a["Coordinate"]["lng"]) -
+                            position.longitude,
+                        2))
+                .compareTo(pow(
+                        double.parse(b["Coordinate"]["lat"]) -
+                            position.latitude,
+                        2) +
+                    pow(
+                        double.parse(b["Coordinate"]["lng"]) -
+                            position.longitude,
+                        2));
+          });
+
+          print('Debug Line409 : QueryResult: ${QueryResult.toString()}');
+          temp = QueryResult[Random().nextInt(QueryResult.length)];
+        } else {
+          temp = QueryResult[Random().nextInt(QueryResult.length)];
+        }
+
         print("temp: ${temp}");
         //check item in recommandTable
         var isInlist = false;
@@ -282,7 +439,36 @@ Future<dynamic> Recommendation() async {
           i--;
           continue;
         }
-        var temp = QueryResult[Random().nextInt(QueryResult.length)];
+
+        //var temp = QueryResult[Random().nextInt(QueryResult.length)];
+        //GPS
+        if (serviceEnabled) {
+          //經，緯度計算QueryResult的距離, 用cos計算緯度差並排列QueryResult
+
+          QueryResult.sort((a, b) {
+            //two point distance sort with position
+            return (pow(
+                        double.parse(a["Coordinate"]["lat"]) -
+                            position.latitude,
+                        2) +
+                    pow(
+                        double.parse(a["Coordinate"]["lng"]) -
+                            position.longitude,
+                        2))
+                .compareTo(pow(
+                        double.parse(b["Coordinate"]["lat"]) -
+                            position.latitude,
+                        2) +
+                    pow(
+                        double.parse(b["Coordinate"]["lng"]) -
+                            position.longitude,
+                        2));
+          });
+          temp = QueryResult[Random().nextInt(QueryResult.length)];
+        } else {
+          temp = QueryResult[Random().nextInt(QueryResult.length)];
+        }
+
         print("temp286: ${temp}");
         var isInlist = false;
         if (recommandTable.length > 0) {
@@ -307,7 +493,36 @@ Future<dynamic> Recommendation() async {
           i--;
           continue;
         }
-        var temp = QueryResult[Random().nextInt(QueryResult.length)];
+
+        //var temp = QueryResult[Random().nextInt(QueryResult.length)];
+        //GPS
+        if (serviceEnabled) {
+          //經，緯度計算QueryResult的距離, 用cos計算緯度差並排列QueryResult
+
+          QueryResult.sort((a, b) {
+            //two point distance sort with position
+            return (pow(
+                        double.parse(a["Coordinate"]["lat"]) -
+                            position.latitude,
+                        2) +
+                    pow(
+                        double.parse(a["Coordinate"]["lng"]) -
+                            position.longitude,
+                        2))
+                .compareTo(pow(
+                        double.parse(b["Coordinate"]["lat"]) -
+                            position.latitude,
+                        2) +
+                    pow(
+                        double.parse(b["Coordinate"]["lng"]) -
+                            position.longitude,
+                        2));
+          });
+          temp = QueryResult[Random().nextInt(QueryResult.length)];
+        } else {
+          temp = QueryResult[Random().nextInt(QueryResult.length)];
+        }
+
         //check item in recommandTable
         var isInlist = false;
         if (recommandTable.length > 0) {
@@ -335,7 +550,29 @@ Future<dynamic> Recommendation() async {
         i--;
         continue;
       }
-      var temp = QueryResult[Random().nextInt(QueryResult.length)];
+
+      //var temp = QueryResult[Random().nextInt(QueryResult.length)];
+      //GPS
+      if (serviceEnabled) {
+        //經，緯度計算QueryResult的距離, 用cos計算緯度差並排列QueryResult
+
+        QueryResult.sort((a, b) {
+          //two point distance sort with position
+          return (pow(double.parse(a["Coordinate"]["lat"]) - position.latitude,
+                      2) +
+                  pow(double.parse(a["Coordinate"]["lng"]) - position.longitude,
+                      2))
+              .compareTo(pow(
+                      double.parse(b["Coordinate"]["lat"]) - position.latitude,
+                      2) +
+                  pow(double.parse(b["Coordinate"]["lng"]) - position.longitude,
+                      2));
+        });
+        temp = QueryResult[Random().nextInt(QueryResult.length)];
+      } else {
+        temp = QueryResult[Random().nextInt(QueryResult.length)];
+      }
+
       print("temp: ${temp}");
       var isInlist = false;
       if (recommandTable.length > 0) {
