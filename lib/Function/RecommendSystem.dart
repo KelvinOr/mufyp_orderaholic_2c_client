@@ -126,12 +126,18 @@ Future<dynamic> Recommendation() async {
                   pow(double.parse(b["Coordinate"]["lng"]) - position.longitude,
                       2));
         });
-        temp = QueryResult[Random().nextInt(QueryResult.length)];
+
+        try {
+          temp = QueryResult[recommandTable.length];
+        } catch (e) {
+          continue;
+        }
       } else {
         temp = QueryResult[Random().nextInt(QueryResult.length)];
       }
 
       var isInlist = false;
+
       if (recommandTable.length > 0) {
         for (var k = 0; k < recommandTable.length; k++) {
           if (temp["Name"] == recommandTable[k]["Name"]) {
@@ -242,7 +248,12 @@ Future<dynamic> Recommendation() async {
                             position.longitude,
                         2));
           });
-          temp = QueryResult[Random().nextInt(QueryResult.length)];
+
+          try {
+            temp = QueryResult[recommandTable.length];
+          } catch (e) {
+            continue;
+          }
         } else {
           temp = QueryResult[Random().nextInt(QueryResult.length)];
         }
@@ -295,7 +306,12 @@ Future<dynamic> Recommendation() async {
                             position.longitude,
                         2));
           });
-          temp = QueryResult[Random().nextInt(QueryResult.length)];
+
+          try {
+            temp = QueryResult[recommandTable.length];
+          } catch (e) {
+            continue;
+          }
         } else {
           temp = QueryResult[Random().nextInt(QueryResult.length)];
         }
@@ -352,7 +368,12 @@ Future<dynamic> Recommendation() async {
                         2));
           });
           print('Debug Line354 : QueryResult: ${QueryResult.toString()}');
-          temp = QueryResult[Random().nextInt(QueryResult.length)];
+
+          try {
+            temp = QueryResult[recommandTable.length];
+          } catch (e) {
+            continue;
+          }
         } else {
           temp = QueryResult[Random().nextInt(QueryResult.length)];
         }
@@ -407,7 +428,12 @@ Future<dynamic> Recommendation() async {
           });
 
           print('Debug Line409 : QueryResult: ${QueryResult.toString()}');
-          temp = QueryResult[Random().nextInt(QueryResult.length)];
+
+          try {
+            temp = QueryResult[recommandTable.length];
+          } catch (e) {
+            continue;
+          }
         } else {
           temp = QueryResult[Random().nextInt(QueryResult.length)];
         }
@@ -464,7 +490,12 @@ Future<dynamic> Recommendation() async {
                             position.longitude,
                         2));
           });
-          temp = QueryResult[Random().nextInt(QueryResult.length)];
+
+          try {
+            temp = QueryResult[recommandTable.length];
+          } catch (e) {
+            continue;
+          }
         } else {
           temp = QueryResult[Random().nextInt(QueryResult.length)];
         }
@@ -518,7 +549,11 @@ Future<dynamic> Recommendation() async {
                             position.longitude,
                         2));
           });
-          temp = QueryResult[Random().nextInt(QueryResult.length)];
+          try {
+            temp = QueryResult[recommandTable.length];
+          } catch (e) {
+            continue;
+          }
         } else {
           temp = QueryResult[Random().nextInt(QueryResult.length)];
         }
@@ -568,7 +603,12 @@ Future<dynamic> Recommendation() async {
                   pow(double.parse(b["Coordinate"]["lng"]) - position.longitude,
                       2));
         });
-        temp = QueryResult[Random().nextInt(QueryResult.length)];
+
+        try {
+          temp = QueryResult[recommandTable.length];
+        } catch (e) {
+          continue;
+        }
       } else {
         temp = QueryResult[Random().nextInt(QueryResult.length)];
       }
