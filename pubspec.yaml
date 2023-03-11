@@ -45,6 +45,7 @@ dependencies:
   cloud_firestore: ^4.3.1
   firebase_database: ^10.0.9
   geolocator: ^9.0.2
+  maps_launcher: ^2.2.0
 
 dev_dependencies:
   flutter_test:

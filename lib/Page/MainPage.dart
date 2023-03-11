@@ -10,6 +10,7 @@ import '../Function/CheckCurrentOrder.dart';
 import '../Function/RecommendSystem.dart';
 import 'package:mufyp_orderaholic_2c_client/Page/QRCodeScanner.dart';
 import 'package:mufyp_orderaholic_2c_client/Page/OrderPage.dart';
+import 'package:mufyp_orderaholic_2c_client/Page/DisplayResInfoPage.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -205,17 +206,63 @@ class _MainPageState extends State<MainPage> {
                                     child: SizedBox(
                                       height: size.height * 0.07,
                                       width: size.width,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                      child: Row(
                                         children: [
-                                          Text(
-                                            recommendItem[index]['Name']
-                                                .toString(),
-                                            style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 217, 201, 201),
-                                              fontWeight: FontWeight.bold,
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Text(
+                                              recommendItem[index]['Name']
+                                                  .toString(),
+                                              style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 217, 201, 201),
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                              print(recommendItem[index]
+                                                  ['Image'][0]);
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    //send data to new page
+                                                    builder: (context) =>
+                                                        DisplayResInfoPage(
+                                                          Name: recommendItem[
+                                                              index]['Name'],
+                                                          Location:
+                                                              recommendItem[
+                                                                      index]
+                                                                  ['Location'],
+                                                          Discription:
+                                                              recommendItem[
+                                                                          index]
+                                                                      [
+                                                                      'Discription']
+                                                                  .toString(),
+                                                          Image: recommendItem[
+                                                              index]['Image'],
+                                                          Type: recommendItem[
+                                                              index]['Type'],
+                                                          lat: recommendItem[
+                                                                      index]
+                                                                  ['Coordinate']
+                                                              ['lat'],
+                                                          long: recommendItem[
+                                                                      index]
+                                                                  ['Coordinate']
+                                                              ['lng'],
+                                                        )),
+                                              );
+                                            },
+                                            icon: const Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: Colors.white,
                                             ),
                                           ),
                                         ],
