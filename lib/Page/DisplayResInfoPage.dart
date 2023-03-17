@@ -44,8 +44,11 @@ class _DisplayResInfoPage extends State<DisplayResInfoPage> {
       if (widget.Image[i]["source"].toString().contains("http")) {
         DisplayImage.add({"source": widget.Image[i]["source"], "type": "url"});
       } else {
-        DisplayImage.add(
-            {"source": widget.Image[i]["source"], "type": "base64"});
+        //add to list and remove "data:image/png;base64,"
+        DisplayImage.add({
+          "source": widget.Image[i]["source"].toString().substring(23),
+          "type": "base64"
+        });
       }
     }
 
