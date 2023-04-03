@@ -44,18 +44,20 @@ class _OrderPageState extends State<OrderPage> {
 
       if (_restaurnatInfo != null) {
         var CurrentTime = DateTime.now().hour.toString();
-        //TODO: remove debug time
-        CurrentTime = "8";
         if (int.parse(CurrentTime) >= 7 && int.parse(CurrentTime) < 11) {
           for (var items in testjsoncode['menu']['breakfast']) {
             _restaurnatMenu.add(MenuItemModel(items['name'], items['price']));
           }
         }
         if (int.parse(CurrentTime) >= 11 && int.parse(CurrentTime) < 17) {
-          _restaurnatMenu = testjsoncode['menu']['lunch'];
+          for (var items in testjsoncode['menu']['lunch']) {
+            _restaurnatMenu.add(MenuItemModel(items['name'], items['price']));
+          }
         }
         if (int.parse(CurrentTime) >= 17 && int.parse(CurrentTime) < 23) {
-          _restaurnatMenu = testjsoncode['menu']['dinner'];
+          for (var items in testjsoncode['menu']['dinner']) {
+            _restaurnatMenu.add(MenuItemModel(items['name'], items['price']));
+          }
         }
         if (int.parse(CurrentTime) >= 23 && int.parse(CurrentTime) < 7) {}
         setState(() {});
@@ -100,48 +102,57 @@ class _OrderPageState extends State<OrderPage> {
             left: size.width * 0.05, right: size.width * 0.05, top: 10),
         child: Column(
           children: [
-            ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: _restaurnatMenu.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  elevation: 6,
-                  margin: const EdgeInsets.all(5),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+            //return no item if _restaurnatMenu is empty
+            _restaurnatMenu.length == 0
+                ? Text(
+                    "No item available",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 20,
+                    ),
+                  )
+                : ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: _restaurnatMenu.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        elevation: 6,
+                        margin: const EdgeInsets.all(5),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        color: SecondaryColor,
+                        child: ListTile(
+                          title: Text(
+                            _restaurnatMenu[index].name,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: Text(
+                            _restaurnatMenu[index].price,
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          trailing: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _orderItem.add(_restaurnatMenu[index]);
+                              });
+                            },
+                            icon: Icon(
+                              Icons.add,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                  color: SecondaryColor,
-                  child: ListTile(
-                    title: Text(
-                      _restaurnatMenu[index].name,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: Text(
-                      _restaurnatMenu[index].price,
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                    trailing: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _orderItem.add(_restaurnatMenu[index]);
-                        });
-                      },
-                      icon: Icon(
-                        Icons.add,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
             SizedBox(
               height: size.height * 0.01,
             ),
