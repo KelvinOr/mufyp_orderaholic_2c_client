@@ -85,9 +85,11 @@ Future<dynamic> Recommendation() async {
       return;
     } else {
       serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      position = await Geolocator.getLastKnownPosition();
     }
   } else {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    position = await Geolocator.getLastKnownPosition();
   }
 
   // for (var i = 0; i < userOrderRecord.length; i++) {
@@ -116,14 +118,21 @@ Future<dynamic> Recommendation() async {
 
         QueryResult.sort((a, b) {
           //two point distance sort with position
-          return (pow(double.parse(a["Coordinate"]["lat"]) - position.latitude,
+          return (pow(
+                      double.parse(a["Coordinate"]["lat"].toString()) -
+                          position.latitude,
                       2) +
-                  pow(double.parse(a["Coordinate"]["lng"]) - position.longitude,
+                  pow(
+                      double.parse(a["Coordinate"]["lng"].toString()) -
+                          position.longitude,
                       2))
               .compareTo(pow(
-                      double.parse(b["Coordinate"]["lat"]) - position.latitude,
+                      double.parse(b["Coordinate"]["lat"].toString()) -
+                          position.latitude,
                       2) +
-                  pow(double.parse(b["Coordinate"]["lng"]) - position.longitude,
+                  pow(
+                      double.parse(b["Coordinate"]["lng"].toString()) -
+                          position.longitude,
                       2));
         });
 
@@ -232,19 +241,19 @@ Future<dynamic> Recommendation() async {
           QueryResult.sort((a, b) {
             //two point distance sort with position
             return (pow(
-                        double.parse(a["Coordinate"]["lat"]) -
+                        double.parse(a["Coordinate"]["lat"].toString()) -
                             position.latitude,
                         2) +
                     pow(
-                        double.parse(a["Coordinate"]["lng"]) -
+                        double.parse(a["Coordinate"]["lng"].toString()) -
                             position.longitude,
                         2))
                 .compareTo(pow(
-                        double.parse(b["Coordinate"]["lat"]) -
+                        double.parse(b["Coordinate"]["lat"].toString()) -
                             position.latitude,
                         2) +
                     pow(
-                        double.parse(b["Coordinate"]["lng"]) -
+                        double.parse(b["Coordinate"]["lng"].toString()) -
                             position.longitude,
                         2));
           });
@@ -290,19 +299,19 @@ Future<dynamic> Recommendation() async {
           QueryResult.sort((a, b) {
             //two point distance sort with position
             return (pow(
-                        double.parse(a["Coordinate"]["lat"]) -
+                        double.parse(a["Coordinate"]["lat"].toString()) -
                             position.latitude,
                         2) +
                     pow(
-                        double.parse(a["Coordinate"]["lng"]) -
+                        double.parse(a["Coordinate"]["lng"].toString()) -
                             position.longitude,
                         2))
                 .compareTo(pow(
-                        double.parse(b["Coordinate"]["lat"]) -
+                        double.parse(b["Coordinate"]["lat"].toString()) -
                             position.latitude,
                         2) +
                     pow(
-                        double.parse(b["Coordinate"]["lng"]) -
+                        double.parse(b["Coordinate"]["lng"].toString()) -
                             position.longitude,
                         2));
           });
@@ -351,19 +360,19 @@ Future<dynamic> Recommendation() async {
           QueryResult.sort((a, b) {
             //two point distance sort with position
             return (pow(
-                        double.parse(a["Coordinate"]["lat"]) -
+                        double.parse(a["Coordinate"]["lat"].toString()) -
                             position.latitude,
                         2) +
                     pow(
-                        double.parse(a["Coordinate"]["lng"]) -
+                        double.parse(a["Coordinate"]["lng"].toString()) -
                             position.longitude,
                         2))
                 .compareTo(pow(
-                        double.parse(b["Coordinate"]["lat"]) -
+                        double.parse(b["Coordinate"]["lat"].toString()) -
                             position.latitude,
                         2) +
                     pow(
-                        double.parse(b["Coordinate"]["lng"]) -
+                        double.parse(b["Coordinate"]["lng"].toString()) -
                             position.longitude,
                         2));
           });
@@ -410,19 +419,19 @@ Future<dynamic> Recommendation() async {
           QueryResult.sort((a, b) {
             //two point distance sort with position
             return (pow(
-                        double.parse(a["Coordinate"]["lat"]) -
+                        double.parse(a["Coordinate"]["lat"].toString()) -
                             position.latitude,
                         2) +
                     pow(
-                        double.parse(a["Coordinate"]["lng"]) -
+                        double.parse(a["Coordinate"]["lng"].toString()) -
                             position.longitude,
                         2))
                 .compareTo(pow(
-                        double.parse(b["Coordinate"]["lat"]) -
+                        double.parse(b["Coordinate"]["lat"].toString()) -
                             position.latitude,
                         2) +
                     pow(
-                        double.parse(b["Coordinate"]["lng"]) -
+                        double.parse(b["Coordinate"]["lng"].toString()) -
                             position.longitude,
                         2));
           });
@@ -474,19 +483,19 @@ Future<dynamic> Recommendation() async {
           QueryResult.sort((a, b) {
             //two point distance sort with position
             return (pow(
-                        double.parse(a["Coordinate"]["lat"]) -
+                        double.parse(a["Coordinate"]["lat"].toString()) -
                             position.latitude,
                         2) +
                     pow(
-                        double.parse(a["Coordinate"]["lng"]) -
+                        double.parse(a["Coordinate"]["lng"].toString()) -
                             position.longitude,
                         2))
                 .compareTo(pow(
-                        double.parse(b["Coordinate"]["lat"]) -
+                        double.parse(b["Coordinate"]["lat"].toString()) -
                             position.latitude,
                         2) +
                     pow(
-                        double.parse(b["Coordinate"]["lng"]) -
+                        double.parse(b["Coordinate"]["lng"].toString()) -
                             position.longitude,
                         2));
           });
@@ -533,19 +542,19 @@ Future<dynamic> Recommendation() async {
           QueryResult.sort((a, b) {
             //two point distance sort with position
             return (pow(
-                        double.parse(a["Coordinate"]["lat"]) -
+                        double.parse(a["Coordinate"]["lat"].toString()) -
                             position.latitude,
                         2) +
                     pow(
-                        double.parse(a["Coordinate"]["lng"]) -
+                        double.parse(a["Coordinate"]["lng"].toString()) -
                             position.longitude,
                         2))
                 .compareTo(pow(
-                        double.parse(b["Coordinate"]["lat"]) -
+                        double.parse(b["Coordinate"]["lat"].toString()) -
                             position.latitude,
                         2) +
                     pow(
-                        double.parse(b["Coordinate"]["lng"]) -
+                        double.parse(b["Coordinate"]["lng"].toString()) -
                             position.longitude,
                         2));
           });
@@ -593,14 +602,21 @@ Future<dynamic> Recommendation() async {
 
         QueryResult.sort((a, b) {
           //two point distance sort with position
-          return (pow(double.parse(a["Coordinate"]["lat"]) - position.latitude,
+          return (pow(
+                      double.parse(a["Coordinate"]["lat"].toString()) -
+                          position.latitude,
                       2) +
-                  pow(double.parse(a["Coordinate"]["lng"]) - position.longitude,
+                  pow(
+                      double.parse(a["Coordinate"]["lng"].toString()) -
+                          position.longitude,
                       2))
               .compareTo(pow(
-                      double.parse(b["Coordinate"]["lat"]) - position.latitude,
+                      double.parse(b["Coordinate"]["lat"].toString()) -
+                          position.latitude,
                       2) +
-                  pow(double.parse(b["Coordinate"]["lng"]) - position.longitude,
+                  pow(
+                      double.parse(b["Coordinate"]["lng"].toString()) -
+                          position.longitude,
                       2));
         });
 
